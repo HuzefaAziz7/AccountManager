@@ -1,14 +1,23 @@
 // This Class contains all the Methods : Credit, Debit, InsertLastTrans, LastTenTrans, InsertCredit, DisplayCredit, 
 public class AccMethods extends AccManager 
-{
+{	
+	static String Date = null ;
+	static int Amount ; 
+	static String Notes = null ; 
+	
 	static public int Credit() {
-		System.out.println("Please Enter The Amount To Be Credited : ");
-		int Amount = scan.nextInt(); // Amount to be entered by the user for credit. 
+		System.out.println("Enter The Date : (YYYY-MM-DD) ");
+		Date = scan.next();
+		System.out.println("Enter The Amount : ") ;
+		Amount = scan.nextInt();
+		System.out.println("Enter Remarks : ");
+		Notes = scan.next();
 		System.out.println("The Amount you have entered is : " + Amount);
 		System.out.println("Your Previous Balance was : " + CurBalance);
 		CurBalance += Amount ;
 		Bal.SetBalance(CurBalance); 
-		System.out.println("Your New Balance is : " + CurBalance); 
+		System.out.println("Your New Balance is : " + CurBalance);
+		InsertCredit(Date,Amount,Notes);
 		return LastAmount = Amount ;
 		
 	} // Credit Method 
@@ -47,23 +56,17 @@ public class AccMethods extends AccManager
 		}
 	} // LastTenTrans Method
 	
-	static public void InsertCredit() { 
+	static public void InsertCredit(String ICDates , int ICAmount, String ICNotes) { 
 		
 		try {
-			
+		
 			// Create Prepared Statement for Credit :
-			PSCredit = MyCon.prepareStatement("insert into Credit values(?,?,?)");
-			System.out.println("Enter The Date : (YYYY-MM-DD) ");
-			String Date = scan.next();
-			System.out.println("Enter The Amount : ") ;
-			int Amount = scan.nextInt();
-			System.out.println("Enter Remarks : ");
-			String Notes = scan.next();
+			PSUpdate = MyCon.prepareStatement("insert into Credit values(?,?,?)");
 			System.out.println("Entering Data.... Please Wait ");
-			PSCredit.setString(1, Date);
-			PSCredit.setDouble(2, Amount);
-			PSCredit.setString(3, Notes);
-			int rowsAffected = PSCredit.executeUpdate();
+			PSUpdate.setString(1, ICDates);
+			PSUpdate.setDouble(2, ICAmount);
+			PSUpdate.setString(3, ICNotes);
+			int rowsAffected = PSUpdate.executeUpdate();
 			
 		} // Try.		
 		
@@ -71,6 +74,25 @@ public class AccMethods extends AccManager
 			exc.printStackTrace();
 		} // Catch. 
 	} // InsertCredit Method.
+	
+	static public void InsertDebit(String ICDates , int ICAmount, String ICNotes) { 
+			
+			try {
+			
+				// Create Prepared Statement for Credit :
+				PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?)");
+				System.out.println("Entering Data.... Please Wait ");
+				PSUpdate.setString(1, ICDates);
+				PSUpdate.setDouble(2, ICAmount);
+				PSUpdate.setString(3, ICNotes);
+				int rowsAffected = PSUpdate.executeUpdate();
+				
+			} // Try.		
+			
+			catch (Exception exc) {
+				exc.printStackTrace();
+			} // Catch. 
+		} // InsertDebit Method.
 	
 	static public void DisplayCredit() {
 		try { 

@@ -21,9 +21,9 @@ public class AccManager {
 	
 	static Connection MyCon = null ;
 	static Statement MyStmt = null ;
-	static PreparedStatement MyPreStmt = null ; 
+	// static PreparedStatement MyPreStmt = null ; 
 	static ResultSet MyRS = null ;
-	static PreparedStatement PSCredit = null ; 
+	static PreparedStatement PSUpdate = null ; 
 	static ArrayList<Integer> LastTrans = new ArrayList<Integer>();
 	static AccBalance Bal = new AccBalance();
 	static Scanner scan = new Scanner(System.in); 

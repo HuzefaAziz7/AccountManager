@@ -48,10 +48,6 @@ public class MainMenu extends AccManager {
 				AccMetd.DisplayCredit();
 				break;
 			case 7 : 
-				System.out.println("Inserting Values into the Database.. ");
-				AccMetd.InsertCredit();
-				break;
-			case 8 : 
 				System.out.println("You've Exited the Program.. Thank You.");
 				// System.exit(0);
 				break ;
