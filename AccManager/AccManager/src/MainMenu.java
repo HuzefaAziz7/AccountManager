@@ -50,18 +50,10 @@ public class MainMenu extends AccManager {
 				AccMetd.DisplayCredit();
 				break;
 			case 7 : 
-				System.out.println("Display all Debits : ");
+				System.out.println("Display Total Credit/Debit : ");
 				AccMetd.TotalDorC() ;
 				break;
 			case 8 : 
-				System.out.print("Total Credit : +"); 
-				AccMetd.TotalCredit();
-				break;
-			case 9 : 
-				System.out.print("Total Debit : -");
-				AccMetd.TotalDebit();
-				break; 
-			case 10 : 
 				System.out.println("You've Exited the Program.. Thank You.");
 				System.exit(0);
 				break ;

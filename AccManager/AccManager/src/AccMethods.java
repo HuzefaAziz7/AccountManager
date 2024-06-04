@@ -139,39 +139,7 @@ public class AccMethods extends AccManager
 				exc.printStackTrace();
 		} // Catch. 
 	} // DisplayCredit.
-	
-	static public void TotalCredit() {
-		try { 
-			// Execute a SQL Query 
-			MyRS = MyStmt.executeQuery("CALL get_TotalCredit()");
-				
-			// Process the ResultSet 
-			while (MyRS.next()) {
-				System.out.println(MyRS.getString("SUM(Amount)")); } 
-			
-			
-		} // Try.
 		
-		catch (Exception exc) {
-				exc.printStackTrace();
-		} // Catch. 
-	} // TotalCredit. 
-	
-	static public void TotalDebit() {
-		try { 
-			// Execute a SQL Query 
-			MyRS = MyStmt.executeQuery("CALL get_TotalDebit()");
-				
-			// Process the ResultSet 
-			while (MyRS.next()) {
-				System.out.println(MyRS.getString("SUM(Amount)")); } 
-		} // Try.
-		
-		catch (Exception exc) {
-				exc.printStackTrace();
-		} // Catch. 
-	} // TotalCredit.
-	
 	static public void TotalDorC() {
 		
 		System.out.print("Enter 1 for Credit or Enter 2 for Debit..?"); 
@@ -198,7 +166,7 @@ public class AccMethods extends AccManager
 		catch (Exception exc) {
 				exc.printStackTrace();
 		} // Catch.
-		
+	
 	} // TotalDorC.
 	
 } // Class End.
