@@ -1,8 +1,8 @@
 /* 
  
  Today's Tasks : 
-	1. Create Methods to control the Credit and Debit Tables in MySQL from Java Program itself. 
-	2. Add two new features called Total Credit and Total Debit. 
+  
+	1. Update the Bank Balance Feature. 
 
  Progress Report :
  
@@ -28,8 +28,7 @@ public class AccManager {
 	static AccBalance Bal = new AccBalance();
 	static Scanner scan = new Scanner(System.in); 
 	static int CurBalance = Bal.GetBalance(); // Assigning Bal.GetBalance to CurBalance (Current Balance) for easy use.
-	static int LastAmount ;
-	static AccDB AccDB = new AccDB();
+	static int LastAmount;
 
 	public static void main(String[] args) {
 		
