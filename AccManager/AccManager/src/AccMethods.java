@@ -1,18 +1,17 @@
 /* This Class contains all the Methods : Credit, Debit, InsertLastTrans, LastTenTrans, 
-										 InsertCredit, DisplayCredit, TotalCredit, TotalDebit 
+										 InsertCredit, DisplayCredit, TotalDorC, BankBalance. 
 */
 
 import java.sql.CallableStatement;
+import java.sql.Types;
 import java.util.concurrent.Callable;
 
-public class AccMethods extends AccManager 
-{	
+public class AccMethods extends AccManager {
+	
 	static String Date = null ; 
 	static int Amount ; 
 	static String Notes = null ;
-	static String Credit = "Credit";
-	static String Debit = "Debit";
-	// static Callable MyCallStmt = null ; 
+	static CallableStatement MyCallStmt = null ; 
 	
 	static public int Credit() {
 		System.out.println("Enter Date (YYYY-MM-DD) : ");
@@ -22,11 +21,8 @@ public class AccMethods extends AccManager
 		System.out.println("Enter Remarks : ");
 		Notes = scan.next();
 		System.out.println("The Amount you have entered is : " + Amount);
-		System.out.println("Your Previous Balance was : " + CurBalance);
-		CurBalance += Amount ;
-		Bal.SetBalance(CurBalance); 
-		System.out.println("Your New Balance is : " + CurBalance);
 		InsertCredit(Date,Amount,Notes);
+		BankBalance();
 		return LastAmount = Amount ;
 		
 	} // Credit Method 
@@ -39,20 +35,26 @@ public class AccMethods extends AccManager
 		System.out.println("Enter Remarks : ");
 		Notes = scan.next();
 		System.out.println("The Amount you have entered is : " + Amount);
-		System.out.println("Your Previous Balance was : " + CurBalance);
-		if (CurBalance >= Amount) { // IF Current Balance is More/Equal to the Amount.
+		// System.out.println("Your Previous Balance was : " + CurBalance);
+		if (Amount<100000) {
 			
-			CurBalance = CurBalance - Amount ; // Amount is Subtracted from Current Balance.
-			Bal.SetBalance(CurBalance);
-			System.out.println("Your New Balance is : " + CurBalance ) ;
-		}
+			if (CurBalance >= Amount) { // IF Current Balance is More/Equal to the Amount.
+			
+			// CurBalance = CurBalance - Amount ; // Amount is Subtracted from Current Balance.
+			// Bal.SetBalance(CurBalance);
+			// System.out.println("Your New Balance is : " + CurBalance ) ;
+			InsertDebit(Date,Amount,Notes);
+			BankBalance();
+				}
 		
-		else {
+			else {
 			System.out.println("You Don't have the entered amount. " ); 
-			System.out.println("Your Balance is : " + CurBalance ) ; 
-			
+			// System.out.println("Your Balance is : " + CurBalance ) ; 
+				}
 		}
-		InsertDebit(Date,Amount,Notes);
+		else { 
+			System.out.print("Spend Limit Exceeded..!");
+		}
 		return LastAmount = Amount ;
 	} // Debit Method.
 	
@@ -140,11 +142,11 @@ public class AccMethods extends AccManager
 		} // Catch. 
 	} // DisplayCredit.
 		
-	static public void TotalDorC() {
+	static public void TotalDorC() { // Total Debit or Credit.
 		
 		System.out.print("Enter 1 for Credit or Enter 2 for Debit..?"); 
 		try { 
-			CallableStatement MyCallStmt = MyCon.prepareCall("{ call get_TotalDorC (?) }") ;
+			MyCallStmt = MyCon.prepareCall("{ call get_TotalDorC (?) }") ;
 			
 			String D_or_C = scan.next() ;
 			MyCallStmt.setString(1, D_or_C);
@@ -168,6 +170,45 @@ public class AccMethods extends AccManager
 		} // Catch.
 	
 	} // TotalDorC.
+	
+	static public void BankBalance() {
+		
+		try {
+			// System.out.print("Your Bank Balance : ");
+			MyCallStmt = MyCon.prepareCall("{ call get_BankBalance () }") ;  
+			MyCallStmt.execute();
+			
+			MyRS = MyCallStmt.getResultSet() ;
+			while (MyRS.next()) {
+				MyRS.getString("BankBalance"); 
+				String TestCurBalance =  MyRS.getString("BankBalance");
+				CurBalance = Integer.parseInt(TestCurBalance);
+			}
+		} // Try.
+		
+		catch (Exception exc) {
+			exc.printStackTrace();
+		} // Catch.
+		
+	} // BankBalance.
+	
+	static public void AvgSpend() {
+		try {
+			
+			MyCallStmt = MyCon.prepareCall("{ call get_AvgSpend() }") ; 
+			MyCallStmt.execute();
+			
+			MyRS = MyCallStmt.getResultSet();
+			while (MyRS.next()) {
+				System.out.println(MyRS.getString("AvgSpend")); 
+			}
+			
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		} // Catch.
+		
+	} // Average Spend.
 	
 } // Class End.
 

@@ -1,14 +1,12 @@
 /* 
- 
  Today's Tasks : 
-  
-	1. Update the Bank Balance Feature. 
-
- Progress Report :
- 
+			5. Spend can be categorized into types of spending. (ex: school, ration, outings etc).
+			7. User can search for Transactions.
+			8. Divide the Methods into two categories (dif classes) namely major and minor. (EASY)
 */
 
 import java.util.Scanner ;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +16,8 @@ import java.util.ArrayList;
 
 public class AccManager {
 	
-	
+	static CallableStatement MyCallStmt = null ;
+	static AccMethods AccMetd = new AccMethods() ;
 	static Connection MyCon = null ;
 	static Statement MyStmt = null ;
 	// static PreparedStatement MyPreStmt = null ; 
@@ -27,7 +26,7 @@ public class AccManager {
 	static ArrayList<Integer> LastTrans = new ArrayList<Integer>();
 	static AccBalance Bal = new AccBalance();
 	static Scanner scan = new Scanner(System.in); 
-	static int CurBalance = Bal.GetBalance(); // Assigning Bal.GetBalance to CurBalance (Current Balance) for easy use.
+	static int CurBalance; // 
 	static int LastAmount;
 
 	public static void main(String[] args) {
@@ -43,14 +42,14 @@ public class AccManager {
 			System.out.println("Database Connection is Successful.");
 			
 			// Create A Statement 
-			MyStmt = MyCon.createStatement(); 
+			MyStmt = MyCon.createStatement();
 		} // Try.
 		
 		catch (Exception exc) {
 			exc.printStackTrace(); 
-		} // Catch. 
-		} // JDBC Connection.
+		}  } // Catch, JDBC Connection.
 		
+		AccMetd.BankBalance();
 		MainMenu MainMenu = new MainMenu();
 		MainMenu.Menu();
 	} // Main Class
@@ -62,12 +61,5 @@ public class AccManager {
  */
 
 /* Side Features that can be added : 
-	1. Average Spend.
-	2. Total Credit.
-	3. Total Debit.
-	4. Spend Limit. (how much money allowed to spend).
-	5. Spend can be categorized into types of spending. (ex: school, ration, outings etc).
 	6. Ordinal Numbers for Transactions History.
-	7. User can search for Transactions.
-	
 */

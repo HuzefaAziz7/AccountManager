@@ -1,5 +1,5 @@
 // This Class contains Account Balance.
-public class AccBalance extends AccManager {
+class AccBalance extends AccManager {
 	private int AccBalance = 0; // Private = Restricted Access
 	
 	public int GetBalance() {

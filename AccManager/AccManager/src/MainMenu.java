@@ -4,8 +4,6 @@ import java.sql.PreparedStatement;
 
 public class MainMenu extends AccManager {
 	
-	static AccMethods AccMetd = new AccMethods() ;
-	
 	static public void Menu() {
 		
 		String Menu = "\nFor Credit, Press 1 \n"
@@ -36,7 +34,8 @@ public class MainMenu extends AccManager {
 				AccMetd.InsertLastTrans();
 				break;
 			case 3 :
-				System.out.println("Your Account Balance is : " + CurBalance );
+				System.out.println("To view BankBalance : " + CurBalance);
+				// AccMetd.BankBalance();
 				break;
 			case 4 : 
 				System.out.println("Your Last Transaction was : " + LastAmount) ;
@@ -54,6 +53,9 @@ public class MainMenu extends AccManager {
 				AccMetd.TotalDorC() ;
 				break;
 			case 8 : 
+				System.out.print("Average Spend : ");
+				AccMetd.AvgSpend();
+			case 9 : 
 				System.out.println("You've Exited the Program.. Thank You.");
 				System.exit(0);
 				break ;
