@@ -11,7 +11,14 @@ public class AccMethods extends AccManager {
 	static String Date = null ; 
 	static int Amount ; 
 	static String Notes = null ;
-	static CallableStatement MyCallStmt = null ; 
+	static CallableStatement MyCallStmt = null ;
+	static String KindMenu = "Select Category : \n" 
+			+ "1. Ration \n" 
+			+ "2. Outing \n"
+			+ "3. Food \n" 
+			+ "4. School \n"
+			+ "5. Others "  ;
+	static String Kind = null ; 
 	
 	static public int Credit() {
 		System.out.println("Enter Date (YYYY-MM-DD) : ");
@@ -20,8 +27,10 @@ public class AccMethods extends AccManager {
 		Amount = scan.nextInt();
 		System.out.println("Enter Remarks : ");
 		Notes = scan.next();
+		System.out.println(KindMenu);
+		KindMenu();
 		System.out.println("The Amount you have entered is : " + Amount);
-		InsertCredit(Date,Amount,Notes);
+		InsertCredit(Date,Amount,Notes,Kind);
 		BankBalance();
 		return LastAmount = Amount ;
 		
@@ -34,6 +43,8 @@ public class AccMethods extends AccManager {
 		Amount = scan.nextInt();
 		System.out.println("Enter Remarks : ");
 		Notes = scan.next();
+		System.out.println(KindMenu);
+		KindMenu();
 		System.out.println("The Amount you have entered is : " + Amount);
 		// System.out.println("Your Previous Balance was : " + CurBalance);
 		if (Amount<100000) {
@@ -43,7 +54,7 @@ public class AccMethods extends AccManager {
 			// CurBalance = CurBalance - Amount ; // Amount is Subtracted from Current Balance.
 			// Bal.SetBalance(CurBalance);
 			// System.out.println("Your New Balance is : " + CurBalance ) ;
-			InsertDebit(Date,Amount,Notes);
+			InsertDebit(Date,Amount,Notes,Kind);
 			BankBalance();
 				}
 		
@@ -71,16 +82,17 @@ public class AccMethods extends AccManager {
 		}
 	} // LastTenTrans Method
 	
-	static public void InsertCredit(String Date, int Amount, String Notes) { 
+	static public void InsertCredit(String Date, int Amount, String Notes, String Kind) { 
  
 		try {
 			
 			// Create Prepared Statement for Credit :
-			PSUpdate = MyCon.prepareStatement("insert into Credit values(?,?,?)");
+			PSUpdate = MyCon.prepareStatement("insert into Credit values(?,?,?,?)");
 			System.out.println("Entering Data.... Please Wait ");		
 			PSUpdate.setString(1, Date);
 			PSUpdate.setDouble(2, Amount);
 			PSUpdate.setString(3, Notes);
+			PSUpdate.setString(4, Kind);
 			int rowsAffected = PSUpdate.executeUpdate();
 			
 		} // Try.		
@@ -90,16 +102,17 @@ public class AccMethods extends AccManager {
 		} // Catch. 
 	} // InsertCredit Method.
 	
-	static public void InsertDebit(String Date, int Amount, String Notes) { 
+	static public void InsertDebit(String Date, int Amount, String Notes,  String Kind) { 
 		 
 		try {
 			
 			// Create Prepared Statement for Credit :
-			PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?)");
+			PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?,?)");
 			System.out.println("Entering Data.... Please Wait ");	
 			PSUpdate.setString(1, Date);
 			PSUpdate.setDouble(2, Amount);
 			PSUpdate.setString(3, Notes);
+			PSUpdate.setString(4, Kind);
 			int rowsAffected = PSUpdate.executeUpdate();
 			
 		} // Try.		
@@ -209,6 +222,27 @@ public class AccMethods extends AccManager {
 		} // Catch.
 		
 	} // Average Spend.
+	
+	static public void KindMenu() {
+		
+		int KindValue = scan.nextInt();
+		if (KindValue == 1) {
+			Kind = "Ration" ;
+		}
+		else if (KindValue == 2) {
+			Kind = "Outing" ;
+		}
+		else if (KindValue == 3) {
+			Kind = "Food" ;
+		}
+		else if (KindValue == 4) {
+			Kind = "School" ;
+		}
+		else if (KindValue == 5) {
+			Kind = "Others" ;
+		}
+		
+	}
 	
 } // Class End.
 

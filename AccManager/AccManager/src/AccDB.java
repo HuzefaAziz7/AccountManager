@@ -1,3 +1,0 @@
-// Account Manager Database.
-
- // Class.

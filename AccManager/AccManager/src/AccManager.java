@@ -1,8 +1,8 @@
 /* 
  Today's Tasks : 
-			5. Spend can be categorized into types of spending. (ex: school, ration, outings etc).
-			7. User can search for Transactions.
-			8. Divide the Methods into two categories (dif classes) namely major and minor. (EASY)
+			5. Spend can be categorized into types of spending. (ex: school, ration, outings etc). (MODERATE) DONE
+			7. User can search for Transactions/Kinds. (HARD) 
+			- Update Menu
 */
 
 import java.util.Scanner ;
@@ -57,9 +57,10 @@ public class AccManager {
 } // Program.
 
 /* Main Features/Changes to be made : 
-   
+   6. Ordinal Numbers for Transactions History. (HARD)
  */
 
 /* Side Features that can be added : 
-	6. Ordinal Numbers for Transactions History.
+	8. Divide the Methods into two categories (dif classes) namely major and minor. (EASY)
+	10. 
 */
