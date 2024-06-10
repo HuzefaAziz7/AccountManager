@@ -55,12 +55,3 @@ public class AccManager {
 	
 } // Program.
 
-/* Main Features/Changes to be made : 
-   6. Ordinal Numbers for Transactions History. (HARD)
-   7. User can search for Transactions/Kinds. (HARD) 
- */
-
-/* Side Features that can be added : 
-	8. Divide the Methods into two categories (dif classes) namely major and minor. (EASY)
-	10. 
-*/
