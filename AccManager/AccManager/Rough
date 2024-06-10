@@ -1,1 +1,0 @@
-MyRS.getString("Notes") + " , "+ MyRS.getString("Amount") + " , " + MyRS.getString("Date")); 
