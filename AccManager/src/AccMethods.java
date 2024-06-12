@@ -20,6 +20,24 @@ public class AccMethods extends AccManager {
 			+ "5. Others "  ;
 	static String Kind = null ; 
 	
+	// All Methods Begin from here. 
+	
+	static public void LoginSystem() {
+		System.out.println("PLEASE VERIFY YOURSELF..");
+		System.out.println("Enter Username : ");
+		String username = scan.nextLine();
+		System.out.println("Enter Password : ");
+		String password = scan.nextLine(); 
+		
+		if (users.containsKey(username) && users.get(username).equals(password)) {
+			AccManager.VerificationSuccess();
+		}
+		else {
+			System.out.println("Verification Failed.. Please Try Again");
+		}
+	} // LoginSystem.
+	
+	
 	static public int Credit() {
 		System.out.println("Enter Date (YYYY-MM-DD) : ");
 		Date = scan.next();

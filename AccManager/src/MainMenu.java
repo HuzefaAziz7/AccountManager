@@ -62,6 +62,7 @@ public class MainMenu extends AccManager {
 			case 9 : 
 				System.out.print("Average Spend : ");
 				AccMetd.AvgSpend();
+				break;
 			case 10 : 
 				System.out.println("You've Exited the Program.. Thank You.");
 				System.exit(0);
