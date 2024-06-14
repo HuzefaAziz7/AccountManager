@@ -1,5 +1,4 @@
-/* This Class contains all the Methods : Credit, Debit, InsertLastTrans, LastTenTrans, 
-										 InsertCredit, DisplayCredit, TotalDorC, BankBalance. 
+/* This Class contains all the Methods.
 */
 
 import java.sql.CallableStatement;
