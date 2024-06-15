@@ -7,4 +7,5 @@
 	8. Divide the Methods into two categories (different classes) namely major and minor. (EASY)
 	10. Is AccBalance Needed?
 	11. Option to Empty Tables (Use Truncate). (EASY)
+	12. The "Username" in ExistingUserLogin is faulty because if the username is not present then there will be errors which are not yet attended.
 
