@@ -2,11 +2,14 @@
 */
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.util.concurrent.Callable;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AccMethods extends AccManager {
 	
+	static PreparedStatement PSUpdate = null ;
 	static String Date = null ; 
 	static int Amount ; 
 	static String Notes = null ;
@@ -19,23 +22,81 @@ public class AccMethods extends AccManager {
 			+ "5. Others "  ;
 	static String Kind = null ; 
 	
-	// All Methods Begin from here. 
+	// All Methods Begin from here.
+	static public void AskUserLogin() {
+		int choice = 0;
+		do {
+			System.out.println("Are You a New User? Select 1 for YES or 2 for NO");
+			choice = scan.nextInt();
+			if (choice == 1) {
+				System.out.println("ReDirecting to New User Registration. Please Wait");
+				AccMetd.NewUserLogin();
+			}
+			else if (choice == 2) {
+				AccMetd.ExistingUserLogin();
+			}
+		} while(choice!=3);
+	} // AskUserLogin Method.
 	
-	static public void LoginSystem() {
-		System.out.println("PLEASE VERIFY YOURSELF..");
-		System.out.println("Enter Username : ");
-		String username = scan.nextLine();
-		System.out.println("Enter Password : ");
-		String password = scan.nextLine(); 
+	static public void NewUserLogin() {
+		AccManager.DBConnection();
+		System.out.println();
+		System.out.print("Enter Username : ");
+		String username = scan.next(); 
+		System.out.print("Enter Password : ");
+		String password = scan.next(); 
+		String HashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 		
-		if (users.containsKey(username) && users.get(username).equals(password)) {
-			AccManager.VerificationSuccess();
+		try {
+			// Prepared Statement for Inserting the Username and HashedPassword into DB.
+			PSUpdate = MyCon.prepareStatement(" INSERT INTO IdInfo(Username,UserPassword) VALUES (?,?) ");
+			System.out.println("Inserting the Data.. Please Wait");
+			PSUpdate.setString(1, username);
+			PSUpdate.setString(2, HashedPassword);
+			int rowsAffected = PSUpdate.executeUpdate();
+			System.out.println("Data Insertion Successfully.");
+			PSUpdate.close();
+			
 		}
-		else {
-			System.out.println("Verification Failed.. Please Try Again");
-		}
-	} // LoginSystem.
+		catch (Exception exc) {
+			exc.printStackTrace();
+		} // Catch.
+		
+	} // NewUserLogin Method.
 	
+	static public void ExistingUserLogin() {
+		AccManager.DBConnection();
+		String hashedpassword = null ;
+		System.out.println();
+		System.out.print("Enter Username : ");
+		String username = scan.next(); 
+		System.out.print("Enter Password : ");
+		String password = scan.next();
+		
+		try {
+			PSUpdate = MyCon.prepareStatement(" SELECT Username,UserPassword FROM IdInfo WHERE Username = ? ");
+			PSUpdate.setString(1,username);
+            MyRS = PSUpdate.executeQuery();
+            if (MyRS.next()) {
+            	hashedpassword  = MyRS.getString("UserPassword"); 
+            }
+			boolean matched = BCrypt.checkpw(password, hashedpassword);
+            if (matched == true) {
+        		System.out.println("Verification Success.");
+        		AccManager.VerificationSuccess();
+        	}
+        	else {
+        		System.out.println("Verification Failed.");
+        		System.out.println("Please Try Again.");
+        	}
+            PSUpdate.close();
+		} // Try.
+		
+		catch (Exception exc) {
+			exc.printStackTrace();
+		} // Catch.
+		
+	} // ExistingUserLogin Method.
 	
 	static public int Credit() {
 		System.out.println("Enter Date (YYYY-MM-DD) : ");
@@ -105,7 +166,7 @@ public class AccMethods extends AccManager {
 			
 			// Create Prepared Statement for Credit :
 			PSUpdate = MyCon.prepareStatement("insert into Credit values(?,?,?,?)");
-			System.out.println("Entering Data.... Please Wait ");		
+			System.out.println("Inserting Data.... Please Wait ");		
 			PSUpdate.setString(1, Date);
 			PSUpdate.setDouble(2, Amount);
 			PSUpdate.setString(3, Notes);

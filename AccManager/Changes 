@@ -6,3 +6,5 @@
  Side Features that can be added : 
 	8. Divide the Methods into two categories (different classes) namely major and minor. (EASY)
 	10. Is AccBalance Needed?
+	11. Option to Empty Tables (Use Truncate). (EASY)
+

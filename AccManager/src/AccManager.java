@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 public class AccManager {
 	
@@ -32,8 +34,14 @@ public class AccManager {
 	static HashMap<String, String> users = new HashMap<String, String>() ;
 	
 	static void VerificationSuccess() {
+		AccManager.DBConnection();
 		System.out.println("Verification Success");
-	
+		AccMetd.BankBalance();
+		MainMenu MainMenu = new MainMenu();
+		MainMenu.Menu();
+	}
+	public static void DBConnection() {
+
 		{ try {
 			// Class.forName("com.mysql.jdbc.Driver");
 			String dbUrl = "jdbc:mysql://localhost:3306/AccManager" ;
@@ -52,16 +60,10 @@ public class AccManager {
 			exc.printStackTrace(); 
 		}  } // Catch, JDBC Connection.
 
-		AccMetd.BankBalance();
-		MainMenu MainMenu = new MainMenu();
-		MainMenu.Menu();
 	}
-	public static void main(String[] args) {
-		users.put("huzefa", "aziz");
-		users.put("hatim", "hasan");
-		users.put("sakina", "hatim");
 	
-		AccMetd.LoginSystem();
+	public static void main(String[] args) {
+		AccMetd.AskUserLogin();
 	} // Main Class
 	
 } // Program.
