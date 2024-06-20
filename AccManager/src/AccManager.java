@@ -14,6 +14,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.mindrot.jbcrypt.BCrypt;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import java.awt.Color;
 
 
 public class AccManager {
@@ -32,6 +35,7 @@ public class AccManager {
 	static int CurBalance; // 
 	static int LastAmount;
 	static HashMap<String, String> users = new HashMap<String, String>() ;
+	static AccSystemGUI GUI = new AccSystemGUI();
 	
 	static void VerificationSuccess() {
 		AccManager.DBConnection();
@@ -63,7 +67,7 @@ public class AccManager {
 	}
 	
 	public static void main(String[] args) {
-		AccMetd.AskUserLogin();
+		// AccMetd.AskUserLogin();
 	} // Main Class
 	
 } // Program.

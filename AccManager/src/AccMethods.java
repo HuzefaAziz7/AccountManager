@@ -35,6 +35,9 @@ public class AccMethods extends AccManager {
 			else if (choice == 2) {
 				AccMetd.ExistingUserLogin();
 			}
+			else {
+				System.exit(0);
+			}
 		} while(choice!=3);
 	} // AskUserLogin Method.
 	

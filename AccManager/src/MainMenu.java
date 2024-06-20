@@ -16,7 +16,7 @@ public class MainMenu extends AccManager {
 				+ "To Display Total Credit or Debit, Press 8 \n"
 				+ "To Display Average Spend, Press 9 \n"
 				// + "\n"
-				+ "To Exit, Press 8 \n" ;
+				+ "To Exit, Press 10 \n" ;
 		
 		System.out.println("Please Enter your choice : \n" ) ;
 		int option = 0 ;
@@ -71,6 +71,6 @@ public class MainMenu extends AccManager {
 			default : 
 				System.out.println("Please Enter a valid option : " );
 			} // Switch 
-		} while (option != 6); // Do 
+		} while (option != 10); // Do 
 	} // Menu Method 
 }
