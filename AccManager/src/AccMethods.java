@@ -23,7 +23,7 @@ public class AccMethods extends AccManager {
 	static String Kind = null ; 
 	
 	// All Methods Begin from here.
-	static public void AskUserLogin() {
+	/* static public void AskUserLogin() {
 		int choice = 0;
 		do {
 			System.out.println("Are You a New User? Select 1 for YES or 2 for NO");
@@ -39,10 +39,11 @@ public class AccMethods extends AccManager {
 				System.exit(0);
 			}
 		} while(choice!=3);
-	} // AskUserLogin Method.
+	} // AskUserLogin Method. */
 	
-	static public void NewUserLogin() {
+	static public void NewUserLogin(String NewUsername, String NewPassword, String ConfirmPassword) {
 		AccManager.DBConnection();
+ 
 		System.out.println();
 		System.out.print("Enter Username : ");
 		String username = scan.next(); 
