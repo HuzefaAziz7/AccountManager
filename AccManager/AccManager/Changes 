@@ -1,0 +1,12 @@
+ Main Features/Changes to be made : 
+   6. Ordinal Numbers for Transactions History. (HARD)
+   7. User can search for Transactions/Kinds. (HARD) 
+   13. Create a Saving Account Pot System. (HARD)
+ 
+
+ Side Features that can be added : 
+	8. Divide the Methods into two categories (different classes) namely major and minor. (EASY)
+	10. Is AccBalance Needed?
+	11. Option to Empty Tables (Use Truncate). (EASY)
+	12. The "Username" in ExistingUserLogin is faulty because if the username is not present then there will be errors which are not yet attended.
+
