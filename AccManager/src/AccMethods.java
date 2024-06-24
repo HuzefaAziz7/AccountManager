@@ -41,50 +41,35 @@ public class AccMethods extends AccManager {
 		} while(choice!=3);
 	} // AskUserLogin Method. */
 	
-	static public void NewUserLogin(String NewUsername, String NewPassword, String ConfirmPassword) {
+	static public void NewUserLogin(String NewUsername, String NewPassword) {
 		AccManager.DBConnection();
- 
-		System.out.println();
-		System.out.print("Enter Username : ");
-		String username = scan.next(); 
-		System.out.print("Enter Password : ");
-		String password = scan.next(); 
-		String HashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+		String HashedPassword = BCrypt.hashpw(NewPassword, BCrypt.gensalt());
 		
 		try {
 			// Prepared Statement for Inserting the Username and HashedPassword into DB.
 			PSUpdate = MyCon.prepareStatement(" INSERT INTO IdInfo(Username,UserPassword) VALUES (?,?) ");
-			System.out.println("Inserting the Data.. Please Wait");
-			PSUpdate.setString(1, username);
+			PSUpdate.setString(1, NewUsername);
 			PSUpdate.setString(2, HashedPassword);
 			int rowsAffected = PSUpdate.executeUpdate();
-			System.out.println("Data Insertion Successfully.");
 			PSUpdate.close();
-			
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
 		} // Catch.
-		
 	} // NewUserLogin Method.
 	
-	static public void ExistingUserLogin() {
+	/* static public void ExistingUserLogin(String Username, String Password) {
 		AccManager.DBConnection();
 		String hashedpassword = null ;
-		System.out.println();
-		System.out.print("Enter Username : ");
-		String username = scan.next(); 
-		System.out.print("Enter Password : ");
-		String password = scan.next();
-		
+
 		try {
 			PSUpdate = MyCon.prepareStatement(" SELECT Username,UserPassword FROM IdInfo WHERE Username = ? ");
-			PSUpdate.setString(1,username);
+			PSUpdate.setString(1,Username);
             MyRS = PSUpdate.executeQuery();
             if (MyRS.next()) {
             	hashedpassword  = MyRS.getString("UserPassword"); 
             }
-			boolean matched = BCrypt.checkpw(password, hashedpassword);
+			boolean matched = BCrypt.checkpw(Password, hashedpassword);
             if (matched == true) {
         		System.out.println("Verification Success.");
         		AccManager.VerificationSuccess();
@@ -100,7 +85,7 @@ public class AccMethods extends AccManager {
 			exc.printStackTrace();
 		} // Catch.
 		
-	} // ExistingUserLogin Method.
+	} // ExistingUserLogin Method. */
 	
 	static public int Credit() {
 		System.out.println("Enter Date (YYYY-MM-DD) : ");

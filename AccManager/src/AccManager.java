@@ -25,8 +25,7 @@ public class AccManager {
 	static CallableStatement MyCallStmt = null ;
 	static AccMethods AccMetd = new AccMethods() ;
 	static Connection MyCon = null ;
-	static Statement MyStmt = null ;
-	// static PreparedStatement MyPreStmt = null ; 
+	static Statement MyStmt = null ; 
 	static ResultSet MyRS = null ;
 	static PreparedStatement PSUpdate = null ; 
 	static ArrayList<Integer> LastTrans = new ArrayList<Integer>();
@@ -54,7 +53,7 @@ public class AccManager {
 			
 			// Get Connection to Database 
 			MyCon = DriverManager.getConnection(dbUrl, usernamedb , passworddb); 
-			System.out.println("Database Connection is Successful.");
+			// System.out.println("Database Connection is Successful.");
 			
 			// Create A Statement 
 			MyStmt = MyCon.createStatement();

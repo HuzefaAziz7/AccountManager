@@ -25,6 +25,9 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
 import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import javax.swing.JScrollBar;
 import java.awt.BorderLayout;
@@ -34,9 +37,24 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import java.awt.Cursor;
+import javax.swing.Timer;
 
 	public class AccSystemGUI extends JFrame {
-		
+	
+		static AccManager AccManager = new AccManager();
+		static CallableStatement MyCallStmt = null ;
+		static AccMethods AccMetd = new AccMethods() ;
+		static Connection MyCon = null ;
+		static Statement MyStmt = null ; 
+		static ResultSet MyRS = null ;
+		static PreparedStatement PSUpdate = null ; 
+		static ArrayList<Integer> LastTrans = new ArrayList<Integer>();
+		static AccBalance Bal = new AccBalance();
+		static Scanner scan = new Scanner(System.in); 
+		static int CurBalance; // 
+		static int LastAmount;
+		static HashMap<String, String> users = new HashMap<String, String>() ;
+		static AccSystemGUI GUI = new AccSystemGUI();
 	    private JPanel contentPane;
 	    private JPanel WelcomePanel;
 	    private JPanel LoginPanel;
@@ -53,6 +71,7 @@ import java.awt.Cursor;
 	    private JButton btnNewUserPanel;
 	    private JLabel lblConfirmPassword;
 	    private JPasswordField pwfieldConfirmPassword;
+	    private JLabel lblDifPassword2 ; 
 
 	    /**
 	     * Launch the application.
@@ -69,7 +88,7 @@ import java.awt.Cursor;
 	            }
 	        });
 	    }
-
+	   
 	    /**
 	     * Create the frame.
 	     */
@@ -83,9 +102,9 @@ import java.awt.Cursor;
 	        contentPane.setLayout(new CardLayout(0, 0));
 	        CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 	        
-	        // Panel 1 (Welcome Panel)
+//	        Welcome Panel
 	        WelcomePanel = new JPanel();
-	        contentPane.add(WelcomePanel, "panel1");
+	        contentPane.add(WelcomePanel, "WelcomePanel");
 	        WelcomePanel.setLayout(null);
 	        
 	        JLabel lblNewLabel = new JLabel("Welcome to Bank");
@@ -94,20 +113,19 @@ import java.awt.Cursor;
 	        lblNewLabel.setBounds(220, 204, 325, 46);
 	        WelcomePanel.add(lblNewLabel);
 	        
-	        JButton btnNewButton = new JButton("Enter");
+	        JButton btnNewButton = new JButton("Enter"); // Welcome Panel Button.
 	        btnNewButton.setFocusable(false);
 	        btnNewButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-	                cardLayout.show(contentPane, "panel2");
+	                cardLayout.show(contentPane, "LoginPanel");
 	            }
 	        });
 	        btnNewButton.setBounds(330, 262, 106, 25);
 	        WelcomePanel.add(btnNewButton);
 	        
-	        // Panel 2 (Login Panel)
+//	        Login Panel.
 	        LoginPanel = new JPanel();
-	        contentPane.add(LoginPanel, "panel2");
+	        contentPane.add(LoginPanel, "LoginPanel");
 	        LoginPanel.setLayout(null);
 	        
 	        JLabel Username = new JLabel("Username");
@@ -127,23 +145,39 @@ import java.awt.Cursor;
 	        passwordField.setBounds(304, 222, 240, 19);
 	        LoginPanel.add(passwordField);
 	        
-	        btnNewButton_1 = new JButton("Enter");
+	        btnNewButton_1 = new JButton("Enter"); // Login Panel Button.
 	        btnNewButton_1.setFocusable(false);
 	        btnNewButton_1.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	                cardLayout.show(contentPane, "VerificationPanel");
-	                String Verification = "Pass" ; 
-	                if (Verification == "Pass") { 
-	                	lblNewLabel_3 = new JLabel("Successful.");
-	                }
-	                else if (Verification == "Fail"){
-	                	lblNewLabel_3 = new JLabel("Failed.");
-	                }
+	                String Username = new String(textField.getText());
+	                String Password = new String(passwordField.getPassword());
 	                
-	                lblNewLabel_3.setFont(new Font("Dialog", Font.BOLD, 52));
-	    	        lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-	    	        lblNewLabel_3.setBounds(179, 136, 380, 169);
-	    	        VerificationPanel.add(lblNewLabel_3);
+	                AccManager.DBConnection();
+	        		String hashedpassword = null ;
+
+	        		try {
+	        			PSUpdate = MyCon.prepareStatement(" SELECT Username,UserPassword FROM IdInfo WHERE Username = ? ");
+	        			PSUpdate.setString(1,Username);
+	                    MyRS = PSUpdate.executeQuery();
+	                    if (MyRS.next()) {
+	                    	hashedpassword  = MyRS.getString("UserPassword"); 
+	                    }
+	        			boolean matched = BCrypt.checkpw(Password, hashedpassword);
+	                    if (matched == true) {
+	                		System.out.println("Verification Success.");
+	                		AccManager.VerificationSuccess();
+	                		
+	                	}
+	                	else {
+	                		System.out.println("Verification Failed.");
+	                		System.out.println("Please Try Again.");
+	                	}
+	                    PSUpdate.close();
+	        		} // Try.
+	        		
+	        		catch (Exception exc) {
+	        			exc.printStackTrace();
+	        		} // Catch.
 	        	}
 	        });
 	        btnNewButton_1.setRolloverEnabled(false);
@@ -165,12 +199,15 @@ import java.awt.Cursor;
 	        AskUserLoginButton.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 	        AskUserLoginButton.setBounds(317, 337, 106, 25);
 	        LoginPanel.add(AskUserLoginButton);
-	        
+
+//	        Verification Panel.
 	        VerificationPanel = new JPanel();
 	        contentPane.add(VerificationPanel, "VerificationPanel");
 	        VerificationPanel.setLayout(null);
 	        
+//	        NewUserPanel.
 	        NewUserPanel = new JPanel();
+	        NewUserPanel.setFont(new Font("Dialog", Font.PLAIN, 19));
 	        contentPane.add(NewUserPanel, "NewUserPanel");
 	        NewUserPanel.setLayout(null);
 	        
@@ -182,6 +219,7 @@ import java.awt.Cursor;
 	        txtfieldNewUsername.setColumns(10);
 	        txtfieldNewUsername.setBounds(307, 191, 240, 19);
 	        NewUserPanel.add(txtfieldNewUsername);
+	         
 	        
 	        lblNewPassword = new JLabel("New Password");
 	        lblNewPassword.setBounds(196, 232, 93, 15);
@@ -199,23 +237,61 @@ import java.awt.Cursor;
 	        pwfieldConfirmPassword.setBounds(307, 268, 240, 19);
 	        NewUserPanel.add(pwfieldConfirmPassword);
 	        
-	        btnNewUserPanel = new JButton("Enter");
+	        lblDifPassword2 = new JLabel(" ");
+	        lblDifPassword2.setBounds(196, 362, 351, 15);
+    		NewUserPanel.add(lblDifPassword2);
+    		
+	        btnNewUserPanel = new JButton("Submit");
 	        btnNewUserPanel.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	        		
-	        		System.out.println(txtfieldNewUsername.getText());
-	        		System.out.println(pwfieldNewPassword.getPassword());
-	        		System.out.println(pwfieldConfirmPassword.getPassword());
+	        		String NewUsername = new String(txtfieldNewUsername.getText()) ;
+	        		String NewPassword = new String(pwfieldNewPassword.getPassword()) ;
+	        		String ConfirmPassword = new String(pwfieldConfirmPassword.getPassword()) ;
+	        		 
+	        		if (NewPassword.equals(ConfirmPassword)) { 
+	        			AccMetd.NewUserLogin(NewUsername, NewPassword);
+	        		    lblDifPassword2.setText("New Login Successful.. Please Wait");
+
+//	        		    After 1.5 seconds, change the label text to "ReDirecting to Login Page."
+	        		    Timer timer1 = new Timer(1500, new ActionListener() {
+	        		        
+	        		    	@Override
+	        		        public void actionPerformed(ActionEvent e) {
+	        		            lblDifPassword2.setText("ReDirecting to Login Page.");
+
+//	        		            After 1 second, Return to the Login Panel.
+	        		            Timer timer2 = new Timer(1000, new ActionListener() {
+	        		                
+	        		            	@Override
+	        		                public void actionPerformed(ActionEvent e) {
+	        		                    //cardLayout.previous(LoginPanel);
+	        		                    cardLayout.show(contentPane, "LoginPanel");
+	        		                }
+	        		            });
+	        		            
+	        		            timer2.setRepeats(false);
+	        		            timer2.start();
+	        		        }
+	        		    });
+	        		    
+	        		    timer1.setRepeats(false);
+	        		    timer1.start();
+	        		    
+	        		} 
+	        		else { 
+	        			lblDifPassword2.setText("Confirmed Password Incorrect..!!");
+	        		}
+	        		
 	        	}
+	        	
 	        });
+	        
 	        btnNewUserPanel.setRolloverEnabled(false);
 	        btnNewUserPanel.setFocusable(false);
 	        btnNewUserPanel.setBounds(294, 304, 106, 25);
 	        NewUserPanel.add(btnNewUserPanel);
 	        
-	        
-	        
-	        
 	    }
-	}
+}
 
