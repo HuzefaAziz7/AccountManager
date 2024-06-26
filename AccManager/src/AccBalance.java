@@ -7,8 +7,8 @@ class AccBalance extends AccManager {
 		return AccBalance ;
 	}
 	
-	public int SetBalance(int UpdBalance) {
-		this.AccBalance = UpdBalance ;
+	public int SetBalance(int AccBalance) {
+		this.AccBalance = AccBalance ;
 		return this.AccBalance ;
 	}
 	

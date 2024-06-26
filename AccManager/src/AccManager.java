@@ -33,27 +33,18 @@ public class AccManager {
 	static Scanner scan = new Scanner(System.in); 
 	static int CurBalance; // 
 	static int LastAmount;
-	static HashMap<String, String> users = new HashMap<String, String>() ;
 	static AccSystemGUI GUI = new AccSystemGUI();
-	
-	static void VerificationSuccess() {
-		AccManager.DBConnection();
-		System.out.println("Verification Success");
-		AccMetd.BankBalance();
-		MainMenu MainMenu = new MainMenu();
-		MainMenu.Menu();
-	}
+
 	public static void DBConnection() {
 
 		{ try {
-			// Class.forName("com.mysql.jdbc.Driver");
+			
 			String dbUrl = "jdbc:mysql://localhost:3306/AccManager" ;
 			String usernamedb = "root" ;
 			String passworddb = "root1203503" ;
 			
 			// Get Connection to Database 
 			MyCon = DriverManager.getConnection(dbUrl, usernamedb , passworddb); 
-			// System.out.println("Database Connection is Successful.");
 			
 			// Create A Statement 
 			MyStmt = MyCon.createStatement();
@@ -66,8 +57,8 @@ public class AccManager {
 	}
 	
 	public static void main(String[] args) {
-		// AccMetd.AskUserLogin();
+		// GUI.main(args);
 	} // Main Class
-	
+//	S
 } // Program.
 

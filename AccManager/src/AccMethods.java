@@ -12,6 +12,7 @@ public class AccMethods extends AccManager {
 	static PreparedStatement PSUpdate = null ;
 	static String Date = null ; 
 	static int Amount ; 
+	static String Result = null ;
 	static String Notes = null ;
 	static CallableStatement MyCallStmt = null ;
 	static String KindMenu = "Select Category : \n" 
@@ -23,24 +24,7 @@ public class AccMethods extends AccManager {
 	static String Kind = null ; 
 	
 	// All Methods Begin from here.
-	/* static public void AskUserLogin() {
-		int choice = 0;
-		do {
-			System.out.println("Are You a New User? Select 1 for YES or 2 for NO");
-			choice = scan.nextInt();
-			if (choice == 1) {
-				System.out.println("ReDirecting to New User Registration. Please Wait");
-				AccMetd.NewUserLogin();
-			}
-			else if (choice == 2) {
-				AccMetd.ExistingUserLogin();
-			}
-			else {
-				System.exit(0);
-			}
-		} while(choice!=3);
-	} // AskUserLogin Method. */
-	
+
 	static public void NewUserLogin(String NewUsername, String NewPassword) {
 		AccManager.DBConnection();
 		String HashedPassword = BCrypt.hashpw(NewPassword, BCrypt.gensalt());
@@ -58,7 +42,7 @@ public class AccMethods extends AccManager {
 		} // Catch.
 	} // NewUserLogin Method.
 	
-	/* static public void ExistingUserLogin(String Username, String Password) {
+	static public void ExistingUserLogin(String Username, String Password) {
 		AccManager.DBConnection();
 		String hashedpassword = null ;
 
@@ -71,12 +55,10 @@ public class AccMethods extends AccManager {
             }
 			boolean matched = BCrypt.checkpw(Password, hashedpassword);
             if (matched == true) {
-        		System.out.println("Verification Success.");
-        		AccManager.VerificationSuccess();
-        	}
+            	System.out.println("58 Working");
+            }
         	else {
-        		System.out.println("Verification Failed.");
-        		System.out.println("Please Try Again.");
+        		System.out.println("61 Working");
         	}
             PSUpdate.close();
 		} // Try.
@@ -84,8 +66,8 @@ public class AccMethods extends AccManager {
 		catch (Exception exc) {
 			exc.printStackTrace();
 		} // Catch.
-		
-	} // ExistingUserLogin Method. */
+	
+	} // ExistingUserLogin Method.
 	
 	static public int Credit() {
 		System.out.println("Enter Date (YYYY-MM-DD) : ");
@@ -117,10 +99,6 @@ public class AccMethods extends AccManager {
 		if (Amount<100000) {
 			
 			if (CurBalance >= Amount) { // IF Current Balance is More/Equal to the Amount.
-			
-			// CurBalance = CurBalance - Amount ; // Amount is Subtracted from Current Balance.
-			// Bal.SetBalance(CurBalance);
-			// System.out.println("Your New Balance is : " + CurBalance ) ;
 			InsertDebit(Date,Amount,Notes,Kind);
 			BankBalance();
 				}

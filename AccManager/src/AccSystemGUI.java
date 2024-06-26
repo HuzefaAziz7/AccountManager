@@ -25,10 +25,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
 import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
-
-import org.mindrot.jbcrypt.BCrypt;
-
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 import javax.swing.JScrollBar;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
@@ -41,20 +37,7 @@ import javax.swing.Timer;
 
 	public class AccSystemGUI extends JFrame {
 	
-		static AccManager AccManager = new AccManager();
-		static CallableStatement MyCallStmt = null ;
 		static AccMethods AccMetd = new AccMethods() ;
-		static Connection MyCon = null ;
-		static Statement MyStmt = null ; 
-		static ResultSet MyRS = null ;
-		static PreparedStatement PSUpdate = null ; 
-		static ArrayList<Integer> LastTrans = new ArrayList<Integer>();
-		static AccBalance Bal = new AccBalance();
-		static Scanner scan = new Scanner(System.in); 
-		static int CurBalance; // 
-		static int LastAmount;
-		static HashMap<String, String> users = new HashMap<String, String>() ;
-		static AccSystemGUI GUI = new AccSystemGUI();
 	    private JPanel contentPane;
 	    private JPanel WelcomePanel;
 	    private JPanel LoginPanel;
@@ -88,7 +71,7 @@ import javax.swing.Timer;
 	            }
 	        });
 	    }
-	   
+	    
 	    /**
 	     * Create the frame.
 	     */
@@ -145,39 +128,23 @@ import javax.swing.Timer;
 	        passwordField.setBounds(304, 222, 240, 19);
 	        LoginPanel.add(passwordField);
 	        
+	        lblDifPassword2 = new JLabel(" ");
+	        lblDifPassword2.setBounds(196, 362, 351, 15);
+	        LoginPanel.add(lblDifPassword2);
+    		
 	        btnNewButton_1 = new JButton("Enter"); // Login Panel Button.
 	        btnNewButton_1.setFocusable(false);
 	        btnNewButton_1.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	                String Username = new String(textField.getText());
 	                String Password = new String(passwordField.getPassword());
-	                
-	                AccManager.DBConnection();
-	        		String hashedpassword = null ;
-
-	        		try {
-	        			PSUpdate = MyCon.prepareStatement(" SELECT Username,UserPassword FROM IdInfo WHERE Username = ? ");
-	        			PSUpdate.setString(1,Username);
-	                    MyRS = PSUpdate.executeQuery();
-	                    if (MyRS.next()) {
-	                    	hashedpassword  = MyRS.getString("UserPassword"); 
-	                    }
-	        			boolean matched = BCrypt.checkpw(Password, hashedpassword);
-	                    if (matched == true) {
-	                		System.out.println("Verification Success.");
-	                		AccManager.VerificationSuccess();
-	                		
-	                	}
-	                	else {
-	                		System.out.println("Verification Failed.");
-	                		System.out.println("Please Try Again.");
-	                	}
-	                    PSUpdate.close();
-	        		} // Try.
-	        		
-	        		catch (Exception exc) {
-	        			exc.printStackTrace();
-	        		} // Catch.
+	                // AccMetd.ExistingUserLogin(Username,Password);
+//	                if (AccMetd.Result.equals("Pass")) {
+//	                	lblDifPassword2.setText("Succesfullll.");
+//	                }
+//	                else if (AccMetd.Result.equals("Fail")) {
+//	                	lblDifPassword2.setText("Failedddd.");
+//	                }
 	        	}
 	        });
 	        btnNewButton_1.setRolloverEnabled(false);
