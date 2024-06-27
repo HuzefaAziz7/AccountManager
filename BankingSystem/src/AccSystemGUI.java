@@ -40,6 +40,7 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 	public class AccSystemGUI extends JFrame {
 	
@@ -64,7 +65,14 @@ import javax.swing.DefaultComboBoxModel;
 	    static JLabel lblVerifyStatus;
 	    JLabel lblVerifyPanelSample ;
 	    JComboBox MenuComboBox = new JComboBox();
-	    private JButton btnMenu_1;
+	    private JLabel lblDorC;
+	    private JPanel panel_1;
+	    private JPanel panel_2;
+	    private JLabel lblNewLabel_1;
+	    private JLabel lblNewLabel_2;
+	    private JButton btnNewButton_2;
+	    private JButton btnNewButton_3;
+	    private JButton btnNewButton_4;
 
 	    /**
 	     * Launch the application.
@@ -193,25 +201,38 @@ import javax.swing.DefaultComboBoxModel;
 	        lblVerifyPanelSample.setBounds(310, 23, 166, 34);
 	        MenuPanel.add(lblVerifyPanelSample);
 	        
-	        MenuComboBox = new JComboBox();
-	        MenuComboBox.setModel(new DefaultComboBoxModel(new String[] {"Credit", "Debit", "Balance", "Last Transactions", "Last Ten Transactions", "Total Credit", "Total Debit ", "Average Spend "}));
-	        MenuComboBox.setBounds(237, 193, 303, 27);
-	        MenuPanel.add(MenuComboBox);
+	        JPanel panel = new JPanel();
+	        panel.setBounds(6, 314, 210, 168);
+	        MenuPanel.add(panel);
 	        
-	        btnMenu_1 = new JButton("Enter");
-	        btnMenu_1.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		String SelectedItem = (String) MenuComboBox.getSelectedItem();
-	        		if (SelectedItem == "Credit") {
-	        			System.out.println("Credit Method");
-	        		}
-	        		else if (SelectedItem == "Debit") {
-	        			System.out.println("Debit Method");
-	        		}
-	        	}
-	        });
-	        btnMenu_1.setBounds(324, 245, 117, 29);
-	        MenuPanel.add(btnMenu_1);
+	        lblDorC = new JLabel(" Deposit/Withdraw");
+	        panel.add(lblDorC);
+	        
+	        btnNewButton_2 = new JButton("New button");
+	        panel.add(btnNewButton_2);
+	        
+	        panel_1 = new JPanel();
+	        panel_1.setBounds(554, 314, 210, 168);
+	        MenuPanel.add(panel_1);
+	        
+	        btnNewButton_4 = new JButton("New button");
+	        panel_1.add(btnNewButton_4);
+	        
+	        lblNewLabel_2 = new JLabel("Others\n");
+	        panel_1.add(lblNewLabel_2);
+	        
+	        panel_2 = new JPanel();
+	        panel_2.setBounds(228, 314, 317, 168);
+	        MenuPanel.add(panel_2);
+	        panel_2.setLayout(null);
+	        
+	        lblNewLabel_1 = new JLabel("Bank Balance");
+	        lblNewLabel_1.setBounds(57, 11, 81, 16);
+	        panel_2.add(lblNewLabel_1);
+	        
+	        btnNewButton_3 = new JButton("New button");
+	        btnNewButton_3.setBounds(106, 61, 117, 29);
+	        panel_2.add(btnNewButton_3);
 
 //	        NewUserPanel.
 	        NewUserPanel = new JPanel();
@@ -303,6 +324,5 @@ import javax.swing.DefaultComboBoxModel;
 	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 	    	cardLayout.show(contentPane, "MenuPanel");
 	    }
-	    
 }
 
