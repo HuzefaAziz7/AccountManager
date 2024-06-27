@@ -10,6 +10,8 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.Component;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
@@ -34,16 +36,20 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import java.awt.Cursor;
 import javax.swing.Timer;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 	public class AccSystemGUI extends JFrame {
 	
 		static AccMethods AccMetd = new AccMethods() ;
-	    private JPanel contentPane;
+	    public static JPanel contentPane;
 	    private JPanel WelcomePanel;
 	    private JPanel LoginPanel;
 	    private JTextField textField;
 	    private JPasswordField passwordField;
-	    private JPanel VerificationPanel;
+	    private JPanel MenuPanel;
 	    private JLabel lblNewLabel_3;
 	    private JButton btnNewButton_1;
 	    private JPanel NewUserPanel;
@@ -54,7 +60,11 @@ import javax.swing.Timer;
 	    private JButton btnNewUserPanel;
 	    private JLabel lblConfirmPassword;
 	    private JPasswordField pwfieldConfirmPassword;
-	    private JLabel lblDifPassword2 ; 
+	    static JLabel lblDifPassword2 ; 
+	    static JLabel lblVerifyStatus;
+	    JLabel lblVerifyPanelSample ;
+	    JComboBox MenuComboBox = new JComboBox();
+	    private JButton btnMenu_1;
 
 	    /**
 	     * Launch the application.
@@ -70,7 +80,7 @@ import javax.swing.Timer;
 	                }
 	            }
 	        });
-	    }
+	    } // Main.
 	    
 	    /**
 	     * Create the frame.
@@ -85,7 +95,7 @@ import javax.swing.Timer;
 	        contentPane.setLayout(new CardLayout(0, 0));
 	        CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 	        
-//	        Welcome Panel
+//	        Welcome Panel.
 	        WelcomePanel = new JPanel();
 	        contentPane.add(WelcomePanel, "WelcomePanel");
 	        WelcomePanel.setLayout(null);
@@ -100,7 +110,7 @@ import javax.swing.Timer;
 	        btnNewButton.setFocusable(false);
 	        btnNewButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	                cardLayout.show(contentPane, "LoginPanel");
+	                cardLayout.show(contentPane, "MenuPanel");
 	            }
 	        });
 	        btnNewButton.setBounds(330, 262, 106, 25);
@@ -128,9 +138,10 @@ import javax.swing.Timer;
 	        passwordField.setBounds(304, 222, 240, 19);
 	        LoginPanel.add(passwordField);
 	        
-	        lblDifPassword2 = new JLabel(" ");
-	        lblDifPassword2.setBounds(196, 362, 351, 15);
-	        LoginPanel.add(lblDifPassword2);
+	        lblVerifyStatus = new JLabel("");
+	        lblVerifyStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+	        lblVerifyStatus.setBounds(304, 319, 260, 25);
+	        LoginPanel.add(lblVerifyStatus);
     		
 	        btnNewButton_1 = new JButton("Enter"); // Login Panel Button.
 	        btnNewButton_1.setFocusable(false);
@@ -138,13 +149,18 @@ import javax.swing.Timer;
 	        	public void actionPerformed(ActionEvent e) {
 	                String Username = new String(textField.getText());
 	                String Password = new String(passwordField.getPassword());
-	                // AccMetd.ExistingUserLogin(Username,Password);
-//	                if (AccMetd.Result.equals("Pass")) {
-//	                	lblDifPassword2.setText("Succesfullll.");
-//	                }
-//	                else if (AccMetd.Result.equals("Fail")) {
-//	                	lblDifPassword2.setText("Failedddd.");
-//	                }
+	                AccMetd.ExistingUserLogin(Username,Password);
+	                if (AccMetd.Result == "Pass" ) {
+	                	Timer timer1 = new Timer(1000, new ActionListener() {
+	                		@Override
+	        		        public void actionPerformed(ActionEvent e) {
+	                			Menu();
+	        		        }
+	                	});
+	                	timer1.setRepeats(false);
+	        		    timer1.start();
+	                }
+	                else {}
 	        	}
 	        });
 	        btnNewButton_1.setRolloverEnabled(false);
@@ -153,7 +169,7 @@ import javax.swing.Timer;
 	        
 	        JLabel AskUserLoginLabel = new JLabel("For New Users, ");
 	        AskUserLoginLabel.setFont(new Font("Dialog", Font.BOLD, 13));
-	        AskUserLoginLabel.setBounds(212, 340, 106, 19);
+	        AskUserLoginLabel.setBounds(213, 399, 106, 19);
 	        LoginPanel.add(AskUserLoginLabel);
 	        
 	        JButton AskUserLoginButton = new JButton("Click Here");
@@ -164,14 +180,39 @@ import javax.swing.Timer;
 	        });
 	        AskUserLoginButton.setFocusable(false);
 	        AskUserLoginButton.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-	        AskUserLoginButton.setBounds(317, 337, 106, 25);
+	        AskUserLoginButton.setBounds(317, 393, 106, 25);
 	        LoginPanel.add(AskUserLoginButton);
 
-//	        Verification Panel.
-	        VerificationPanel = new JPanel();
-	        contentPane.add(VerificationPanel, "VerificationPanel");
-	        VerificationPanel.setLayout(null);
+//	        Menu Panel.
+	        MenuPanel = new JPanel();
+	        contentPane.add(MenuPanel, "MenuPanel");
+	        MenuPanel.setLayout(null);
 	        
+	        lblVerifyPanelSample = new JLabel("Main Menu");
+	        lblVerifyPanelSample.setFont(new Font("Lucida Grande", Font.PLAIN, 29));
+	        lblVerifyPanelSample.setBounds(310, 23, 166, 34);
+	        MenuPanel.add(lblVerifyPanelSample);
+	        
+	        MenuComboBox = new JComboBox();
+	        MenuComboBox.setModel(new DefaultComboBoxModel(new String[] {"Credit", "Debit", "Balance", "Last Transactions", "Last Ten Transactions", "Total Credit", "Total Debit ", "Average Spend "}));
+	        MenuComboBox.setBounds(237, 193, 303, 27);
+	        MenuPanel.add(MenuComboBox);
+	        
+	        btnMenu_1 = new JButton("Enter");
+	        btnMenu_1.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		String SelectedItem = (String) MenuComboBox.getSelectedItem();
+	        		if (SelectedItem == "Credit") {
+	        			System.out.println("Credit Method");
+	        		}
+	        		else if (SelectedItem == "Debit") {
+	        			System.out.println("Debit Method");
+	        		}
+	        	}
+	        });
+	        btnMenu_1.setBounds(324, 245, 117, 29);
+	        MenuPanel.add(btnMenu_1);
+
 //	        NewUserPanel.
 	        NewUserPanel = new JPanel();
 	        NewUserPanel.setFont(new Font("Dialog", Font.PLAIN, 19));
@@ -243,15 +284,12 @@ import javax.swing.Timer;
 	        		    });
 	        		    
 	        		    timer1.setRepeats(false);
-	        		    timer1.start();
-	        		    
+	        		    timer1.start();    
 	        		} 
 	        		else { 
 	        			lblDifPassword2.setText("Confirmed Password Incorrect..!!");
 	        		}
-	        		
 	        	}
-	        	
 	        });
 	        
 	        btnNewUserPanel.setRolloverEnabled(false);
@@ -260,5 +298,11 @@ import javax.swing.Timer;
 	        NewUserPanel.add(btnNewUserPanel);
 	        
 	    }
+	    
+	    private void Menu() {
+	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+	    	cardLayout.show(contentPane, "MenuPanel");
+	    }
+	    
 }
 

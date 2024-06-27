@@ -15,6 +15,7 @@ public class AccMethods extends AccManager {
 	static String Result = null ;
 	static String Notes = null ;
 	static CallableStatement MyCallStmt = null ;
+	static int TempInt = 0 ; 
 	static String KindMenu = "Select Category : \n" 
 			+ "1. Ration \n" 
 			+ "2. Outing \n"
@@ -55,10 +56,12 @@ public class AccMethods extends AccManager {
             }
 			boolean matched = BCrypt.checkpw(Password, hashedpassword);
             if (matched == true) {
-            	System.out.println("58 Working");
+            	GUI.lblVerifyStatus.setText("Login Successful.. Please Wait");
+            	Result = "Pass";
             }
         	else {
-        		System.out.println("61 Working");
+        		GUI.lblVerifyStatus.setText("Login Failed.. Please try again");
+        		Result = "Fail";
         	}
             PSUpdate.close();
 		} // Try.
