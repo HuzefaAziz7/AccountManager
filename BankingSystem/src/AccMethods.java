@@ -133,10 +133,9 @@ public class AccMethods extends AccManager {
 	static public void InsertCredit(String Date, int Amount, String Notes, String Kind) { 
  
 		try {
-			
+			AccManager.DBConnection();
 			// Create Prepared Statement for Credit :
-			PSUpdate = MyCon.prepareStatement("insert into Credit values(?,?,?,?)");
-			System.out.println("Inserting Data.... Please Wait ");		
+			PSUpdate = MyCon.prepareStatement("INSERT INTO Credit VALUES(?,?,?,?)");		
 			PSUpdate.setString(1, Date);
 			PSUpdate.setDouble(2, Amount);
 			PSUpdate.setString(3, Notes);
@@ -153,10 +152,9 @@ public class AccMethods extends AccManager {
 	static public void InsertDebit(String Date, int Amount, String Notes,  String Kind) { 
 		 
 		try {
-			
+			AccManager.DBConnection();
 			// Create Prepared Statement for Credit :
-			PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?,?)");
-			System.out.println("Entering Data.... Please Wait ");	
+			PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?,?)");	
 			PSUpdate.setString(1, Date);
 			PSUpdate.setDouble(2, Amount);
 			PSUpdate.setString(3, Notes);
