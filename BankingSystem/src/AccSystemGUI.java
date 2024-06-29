@@ -1,3 +1,6 @@
+/*
+ * Report : LastTenTrans Array is not updating when inserting transactions.
+ * */
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -40,7 +43,6 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 	public class AccSystemGUI extends JFrame {
 	
@@ -75,7 +77,7 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 	    private JLabel lblDorC5;
 	    private JComboBox KindComboBox;
 	    private JLabel lblDorCConfirmation;
-	    public JLabel lblOutput_1 ;
+	    static JLabel lblOutput_1 ;
 
 	    /**
 	     * Launch the application.
@@ -334,7 +336,6 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 	        	public void actionPerformed(ActionEvent e) {
 	        		 String SelectedItem = (String) OthersComboBox.getSelectedItem(); 
 	        		 AccMetd.OthersItemDisplay(SelectedItem); 
-	        		 lblOutput_1.setText("Your Current Bank Balance : ₹" + AccMetd.CurBalance);
 	        	
 	        	}
 	        });

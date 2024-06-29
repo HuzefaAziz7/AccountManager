@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
+
+import javax.swing.DefaultComboBoxModel;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class AccMethods extends AccManager {
@@ -74,24 +77,25 @@ public class AccMethods extends AccManager {
 		} // Catch.
 	
 	} // ExistingUserLogin Method.
-	
+		
 	static public void InsertLastTrans() {
 		int InLastTrans = LastAmount ; 
 		LastTrans.add(InLastTrans);
 	} // Inserting Last Transaction into The LastTrans[] ArrayList.
 		
-	static public void LastTenTrans() {
-		int x = 0 ; 
+	public void LastTenTrans() {
+		System.out.println(LastTrans.size()) ;
 		for (int i=0;i<LastTrans.size();i++) {
-			x = i+1;
-			System.out.println("Your No." + x + " Transaction was ₹" + LastTrans.get(i) +".");	
+			int x = i+1 ;
+			System.out.println("Your No." + x + " Transaction was ₹" + LastTrans.get(i) +".") ;	
+			GUI.lblOutput_1.setText("Your No." + x + " Transaction was ₹" + LastTrans.get(i) +".") ;
 		}
 	} // LastTenTrans Method
 	
 	static public void InsertCredit(String Date, int Amount, String Notes, String Kind) { 
  
 		try {
-			
+			LastAmount = Amount; 
 			// Create Prepared Statement for Credit :
 			PSUpdate = MyCon.prepareStatement("INSERT INTO Credit VALUES(?,?,?,?)");		
 			PSUpdate.setString(1, Date);
@@ -111,6 +115,7 @@ public class AccMethods extends AccManager {
 		 
 		try {
 			
+			LastAmount = Amount ; 
 			// Create Prepared Statement for Credit :
 			PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?,?)");	
 			PSUpdate.setString(1, Date);
@@ -199,19 +204,18 @@ public class AccMethods extends AccManager {
 			while (MyRS.next()) {
 				MyRS.getString("BankBalance"); 
 				CurBalance = Integer.parseInt(MyRS.getString("BankBalance"));
-//				System.out.println(CurBalance);
-//				GUI.lblOutput_1.setText("Your Current Bank Balance is 50000");
 //				System.out.println("249 Working");
+				GUI.lblOutput_1.setText("Your Current Bank Balance : ₹" + CurBalance);
 			}
 		} // Try.
 		
 		catch (Exception exc) {
 			exc.printStackTrace();
 		} // Catch.
-		
 	} // BankBalance.
 	
-	static public void AvgSpend() {
+	public void AvgSpend() {
+		double AvgSpend = 0 ;
 		try {
 			
 			MyCallStmt = MyCon.prepareCall("{ call get_AvgSpend() }") ; 
@@ -219,9 +223,9 @@ public class AccMethods extends AccManager {
 			
 			MyRS = MyCallStmt.getResultSet();
 			while (MyRS.next()) {
-				System.out.println(MyRS.getString("AvgSpend")); 
+				AvgSpend = Double.parseDouble(MyRS.getString("AvgSpend"));
 			}
-			
+			GUI.lblOutput_1.setText("Your Average Spend : ₹" + AvgSpend);
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -250,9 +254,19 @@ public class AccMethods extends AccManager {
 		
 	}
 	
+	public void LastAmount() {
+		GUI.lblOutput_1.setText("Your Last Transaction : ₹" + LastAmount);
+	} // LastAmount.
+	
 	public void OthersItemDisplay(String SelectedItem) {
-		HashMap<String, Runnable> ItemMap = new HashMap<String, Runnable>(); 
+		HashMap<String, Runnable> ItemMap = new HashMap<String, Runnable>();
 		ItemMap.put("Bank Balance", this::BankBalance);
+		ItemMap.put("Last Transaction", this::LastAmount);
+		ItemMap.put("Last Ten Transaction", this::LastTenTrans);
+		ItemMap.put("Average Spend", this::AvgSpend);
+//		ItemMap.put("Total Credit", this::BankBalance);
+//		ItemMap.put("Total Debit", this::BankBalance);
+//		ItemMap.put("Bank Balance", this::BankBalance);
 		if (ItemMap.containsKey(SelectedItem)) {
 			ItemMap.get(SelectedItem).run();
 		}

@@ -25,21 +25,7 @@ public class MainMenu extends AccManager {
 			System.out.println(Menu);
 			option = scan.nextInt();
 			
-			switch (option) {
-			case 1 : 
-//				System.out.println("You've Chosen the Credit Method. " ); 
-//				AccMetd.Credit();
-//				AccMetd.InsertLastTrans();
-//				break;
-//			case 2 : 
-//				System.out.println("You've Chosen the Debit Method : " ); 
-//				AccMetd.Debit();
-//				AccMetd.InsertLastTrans();
-//				break;
-//			case 3 :
-//				System.out.println("To view BankBalance : " + CurBalance);s
-//				// AccMetd.BankBalance();
-				break;
+			switch (option) { 
 			case 4 : 
 				System.out.println("Your Last Transaction was : " + LastAmount) ;
 				break;
