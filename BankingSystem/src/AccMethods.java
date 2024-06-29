@@ -75,51 +75,6 @@ public class AccMethods extends AccManager {
 	
 	} // ExistingUserLogin Method.
 	
-/*	static public int Credit() {
-		System.out.println("Enter Date (YYYY-MM-DD) : ");
-		Date = scan.next();
-		System.out.println("Enter The Amount : ") ;
-		Amount = scan.nextInt();
-		System.out.println("Enter Remarks : ");
-		Notes = scan.next();
-		System.out.println(KindMenu);
-		KindMenu();
-		System.out.println("The Amount you have entered is : " + Amount);
-		InsertCredit(Date,Amount,Notes,Kind);
-		AccMetd.BankBalance();
-		return LastAmount = Amount ;
-		
-	} // Credit Method 
-	
-	static public int Debit() {
-		System.out.println("Enter Date (YYYY-MM-DD) : ");
-		Date = scan.next();
-		System.out.println("Please Enter The Amount to be Debited : " );
-		Amount = scan.nextInt();
-		System.out.println("Enter Remarks : ");
-		Notes = scan.next();
-		System.out.println(KindMenu);
-		KindMenu();
-		System.out.println("The Amount you have entered is : " + Amount);
-		// System.out.println("Your Previous Balance was : " + CurBalance);
-		if (Amount<100000) {
-			
-			if (CurBalance >= Amount) { // IF Current Balance is More/Equal to the Amount.
-			InsertDebit(Date,Amount,Notes,Kind);
-			AccMetd.BankBalance();
-				}
-		
-			else {
-			System.out.println("You Don't have the entered amount. " ); 
-			// System.out.println("Your Balance is : " + CurBalance ) ; 
-				}
-		}
-		else { 
-			System.out.print("Spend Limit Exceeded..!");
-		}
-		return LastAmount = Amount ;
-	} // Debit Method. */
-	
 	static public void InsertLastTrans() {
 		int InLastTrans = LastAmount ; 
 		LastTrans.add(InLastTrans);
