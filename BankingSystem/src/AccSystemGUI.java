@@ -68,13 +68,14 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 	    private JLabel lblDorC;
 	    private JPanel panel_1;
 	    private JButton btnMPPanelDorC;
-	    private JButton btnMPPanel_1;
+	    private JButton btnMPOthers;
 	    private JTextField DateTxtField;
 	    private JTextField AmountTxtField;
 	    private JTextField RemarksTxtField;
 	    private JLabel lblDorC5;
 	    private JComboBox KindComboBox;
 	    private JLabel lblDorCConfirmation;
+	    public JLabel lblOutput_1 ;
 
 	    /**
 	     * Launch the application.
@@ -193,63 +194,6 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 	        AskUserLoginButton.setBounds(317, 393, 106, 25);
 	        LoginPanel.add(AskUserLoginButton);
 
-//	        Menu Panel.
-	        MenuPanel = new JPanel();
-	        contentPane.add(MenuPanel, "MenuPanel");
-	        MenuPanel.setLayout(null);
-	        
-	        lblVerifyPanelSample = new JLabel("Main Menu");
-	        lblVerifyPanelSample.setFont(new Font("Lucida Grande", Font.PLAIN, 29));
-	        lblVerifyPanelSample.setBounds(310, 23, 166, 34);
-	        MenuPanel.add(lblVerifyPanelSample);
-	        
-	        JPanel panel = new JPanel();
-	        panel.setBounds(6, 314, 341, 168);
-	        MenuPanel.add(panel);
-	        panel.setLayout(null);
-	        
-	        lblDorC = new JLabel(" Deposit/Withdraw");
-	        lblDorC.setBounds(117, 55, 118, 16);
-	        panel.add(lblDorC);
-	        
-	        btnMPPanelDorC = new JButton("Enter");
-	        btnMPPanelDorC.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		cardLayout.show(contentPane, "DorCPanel");
-	        	}
-	        });
-	        btnMPPanelDorC.setFocusable(false);
-	        btnMPPanelDorC.setBounds(117, 83, 117, 29);
-	        panel.add(btnMPPanelDorC);
-	        
-	        panel_1 = new JPanel();
-	        panel_1.setBounds(346, 314, 418, 168);
-	        MenuPanel.add(panel_1);
-	        panel_1.setLayout(null);
-	        
-	        btnMPPanel_1 = new JButton("Enter");
-	        btnMPPanel_1.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		
-	        	}
-	        });
-	        btnMPPanel_1.setFocusable(false);
-	        btnMPPanel_1.setBounds(136, 83, 117, 29);
-	        panel_1.add(btnMPPanel_1);
-	        
-	        JComboBox comboBox = new JComboBox();
-	        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Bank Balance", "Last Transaction", "Last Ten Transaction", "Average Spend", "Total Credit", "Total Debit"}));
-	        comboBox.setBounds(66, 44, 261, 27);
-	        panel_1.add(comboBox);
-	        
-	        JLabel lblP_1 = new JLabel("Others");
-	        lblP_1.setBounds(164, 16, 61, 16);
-	        panel_1.add(lblP_1);
-	        
-	        JLabel lbloutputPanel_1 = new JLabel("");
-	        lbloutputPanel_1.setHorizontalAlignment(SwingConstants.CENTER);
-	        lbloutputPanel_1.setBounds(6, 138, 758, 48);
-	        MenuPanel.add(lbloutputPanel_1);
 
 //	        NewUserPanel.
 	        NewUserPanel = new JPanel();
@@ -334,7 +278,72 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 	        btnNewUserPanel.setFocusable(false);
 	        btnNewUserPanel.setBounds(294, 304, 106, 25);
 	        NewUserPanel.add(btnNewUserPanel);
+	     
+//	        Menu Panel.
+	        MenuPanel = new JPanel();
+	        contentPane.add(MenuPanel, "MenuPanel");
+	        MenuPanel.setLayout(null);
+    
+	        lblVerifyPanelSample = new JLabel("Main Menu");
+	        lblVerifyPanelSample.setFont(new Font("Lucida Grande", Font.PLAIN, 29));
+	        lblVerifyPanelSample.setBounds(310, 23, 166, 34);
+	        MenuPanel.add(lblVerifyPanelSample);
 	        
+	        JPanel panel = new JPanel();
+	        panel.setBounds(6, 314, 341, 168);
+	        MenuPanel.add(panel);
+	        panel.setLayout(null);
+	        
+	        lblDorC = new JLabel("Deposit/Withdraw");
+	        lblDorC.setBounds(117, 55, 118, 16);
+	        panel.add(lblDorC);
+	        
+	        btnMPPanelDorC = new JButton("Enter");
+	        btnMPPanelDorC.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		cardLayout.show(contentPane, "DorCPanel");
+	        	}
+	        });
+	        btnMPPanelDorC.setFocusable(false);
+	        btnMPPanelDorC.setBounds(117, 83, 117, 29);
+	        panel.add(btnMPPanelDorC);
+	        
+	        panel_1 = new JPanel();
+	        panel_1.setBounds(346, 314, 418, 168);
+	        MenuPanel.add(panel_1);
+	        panel_1.setLayout(null);
+	        
+	        JComboBox OthersComboBox = new JComboBox();
+	        OthersComboBox.setModel(new DefaultComboBoxModel(new String[] {"Bank Balance", "Last Transaction", "Last Ten Transaction", "Average Spend", "Total Credit", "Total Debit"}));
+	        OthersComboBox.setBounds(66, 44, 261, 27);
+	        panel_1.add(OthersComboBox);
+	        
+	        JLabel lblP_1 = new JLabel("Others");
+	        lblP_1.setBounds(164, 16, 61, 16);
+	        panel_1.add(lblP_1);
+	        
+
+	        lblOutput_1 = new JLabel("Hello");
+	        lblOutput_1.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
+	        lblOutput_1.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblOutput_1.setBounds(6, 138, 758, 48);
+	        MenuPanel.add(lblOutput_1);
+	        
+	        btnMPOthers = new JButton("Enter");
+	        btnMPOthers.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		 String SelectedItem = (String) OthersComboBox.getSelectedItem(); 
+	        		 AccMetd.OthersItemDisplay(SelectedItem); 
+	        		 lblOutput_1.setText("Your Current Bank Balance : ₹" + AccMetd.CurBalance);
+	        	
+	        	}
+	        });
+	        btnMPOthers.setFocusable(false);
+	        btnMPOthers.setBounds(136, 83, 117, 29);
+	        panel_1.add(btnMPOthers);
+	        
+	        
+//	        DorC Panel.
 	        JPanel DorCPanel = new JPanel();
 	        contentPane.add(DorCPanel, "DorCPanel");
 	        DorCPanel.setLayout(null);
@@ -418,11 +427,25 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 	        lblDorCConfirmation.setBounds(545, 328, 210, 16);
 	        DorCPanel.add(lblDorCConfirmation);
 	        
+	        JButton btnBack = new JButton("Back");
+	        btnBack.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		Back("contentPane","MenuPanel");
+	        	}
+	        });
+	        btnBack.setBounds(6, 453, 117, 29);
+	        DorCPanel.add(btnBack);
+	        
 	        
 	        
 	    }
 	    
 	    private void Menu() {
+	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+	    	cardLayout.show(contentPane, "MenuPanel");
+	    }
+	    
+	    private void Back(String x, String y) { 	// Goes to the Previous Page.
 	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 	    	cardLayout.show(contentPane, "MenuPanel");
 	    }

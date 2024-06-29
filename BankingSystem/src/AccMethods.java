@@ -4,6 +4,7 @@
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.Types;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -15,7 +16,8 @@ public class AccMethods extends AccManager {
 	static String Result = null ;
 	static String Notes = null ;
 	static CallableStatement MyCallStmt = null ;
-	static int TempInt = 0 ; 
+	static int TempInt = 0 ;
+	static String TempString = null ; 
 	static String KindMenu = "Select Category : \n" 
 			+ "1. Ration \n" 
 			+ "2. Outing \n"
@@ -23,9 +25,10 @@ public class AccMethods extends AccManager {
 			+ "4. School \n"
 			+ "5. Others "  ;
 	static String Kind = null ; 
-	
 	// All Methods Begin from here.
-
+	AccMethods() {
+		AccManager.DBConnection();
+	}
 	static public void NewUserLogin(String NewUsername, String NewPassword) {
 		AccManager.DBConnection();
 		String HashedPassword = BCrypt.hashpw(NewPassword, BCrypt.gensalt());
@@ -72,7 +75,7 @@ public class AccMethods extends AccManager {
 	
 	} // ExistingUserLogin Method.
 	
-	static public int Credit() {
+/*	static public int Credit() {
 		System.out.println("Enter Date (YYYY-MM-DD) : ");
 		Date = scan.next();
 		System.out.println("Enter The Amount : ") ;
@@ -83,7 +86,7 @@ public class AccMethods extends AccManager {
 		KindMenu();
 		System.out.println("The Amount you have entered is : " + Amount);
 		InsertCredit(Date,Amount,Notes,Kind);
-		BankBalance();
+		AccMetd.BankBalance();
 		return LastAmount = Amount ;
 		
 	} // Credit Method 
@@ -103,7 +106,7 @@ public class AccMethods extends AccManager {
 			
 			if (CurBalance >= Amount) { // IF Current Balance is More/Equal to the Amount.
 			InsertDebit(Date,Amount,Notes,Kind);
-			BankBalance();
+			AccMetd.BankBalance();
 				}
 		
 			else {
@@ -115,7 +118,7 @@ public class AccMethods extends AccManager {
 			System.out.print("Spend Limit Exceeded..!");
 		}
 		return LastAmount = Amount ;
-	} // Debit Method.
+	} // Debit Method. */
 	
 	static public void InsertLastTrans() {
 		int InLastTrans = LastAmount ; 
@@ -133,7 +136,7 @@ public class AccMethods extends AccManager {
 	static public void InsertCredit(String Date, int Amount, String Notes, String Kind) { 
  
 		try {
-			AccManager.DBConnection();
+			
 			// Create Prepared Statement for Credit :
 			PSUpdate = MyCon.prepareStatement("INSERT INTO Credit VALUES(?,?,?,?)");		
 			PSUpdate.setString(1, Date);
@@ -152,7 +155,7 @@ public class AccMethods extends AccManager {
 	static public void InsertDebit(String Date, int Amount, String Notes,  String Kind) { 
 		 
 		try {
-			AccManager.DBConnection();
+			
 			// Create Prepared Statement for Credit :
 			PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?,?)");	
 			PSUpdate.setString(1, Date);
@@ -230,7 +233,7 @@ public class AccMethods extends AccManager {
 	
 	} // TotalDorC.
 	
-	static public void BankBalance() {
+	public void BankBalance() {
 		
 		try {
 			// System.out.print("Your Bank Balance : ");
@@ -240,8 +243,10 @@ public class AccMethods extends AccManager {
 			MyRS = MyCallStmt.getResultSet() ;
 			while (MyRS.next()) {
 				MyRS.getString("BankBalance"); 
-				String TestCurBalance =  MyRS.getString("BankBalance");
-				CurBalance = Integer.parseInt(TestCurBalance);
+				CurBalance = Integer.parseInt(MyRS.getString("BankBalance"));
+//				System.out.println(CurBalance);
+//				GUI.lblOutput_1.setText("Your Current Bank Balance is 50000");
+//				System.out.println("249 Working");
 			}
 		} // Try.
 		
@@ -289,6 +294,15 @@ public class AccMethods extends AccManager {
 		}
 		
 	}
+	
+	public void OthersItemDisplay(String SelectedItem) {
+		HashMap<String, Runnable> ItemMap = new HashMap<String, Runnable>(); 
+		ItemMap.put("Bank Balance", this::BankBalance);
+		if (ItemMap.containsKey(SelectedItem)) {
+			ItemMap.get(SelectedItem).run();
+		}
+		
+	} // OthersItemDisplay. (Menu Panel)
 	
 } // Class End.
 
