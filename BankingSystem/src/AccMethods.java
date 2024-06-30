@@ -78,24 +78,33 @@ public class AccMethods extends AccManager {
 	
 	} // ExistingUserLogin Method.
 		
-	static public void InsertLastTrans() {
+	static public void InsertLastTrans() { // Changes Needed.
 		int InLastTrans = LastAmount ; 
 		LastTrans.add(InLastTrans);
 	} // Inserting Last Transaction into The LastTrans[] ArrayList.
-		
+	
+/* Changes Needed. 
 	public void LastTenTrans() {
 		System.out.println(LastTrans.size()) ;
 		for (int i=0;i<LastTrans.size();i++) {
 			int x = i+1 ;
-			System.out.println("Your No." + x + " Transaction was ₹" + LastTrans.get(i) +".") ;	
+			int j = 0 ; 
+//			System.out.println("Your No." + x + " Transaction was ₹" + LastTrans.get(i) +".") ;	
 			GUI.lblOutput_1.setText("Your No." + x + " Transaction was ₹" + LastTrans.get(i) +".") ;
+			while (j<i) {
+				
+			}
+			
 		}
+		System.out.println(LastTrans.size()) ;
 	} // LastTenTrans Method
+*/
 	
 	static public void InsertCredit(String Date, int Amount, String Notes, String Kind) { 
  
 		try {
 			LastAmount = Amount; 
+			InsertLastTrans();
 			// Create Prepared Statement for Credit :
 			PSUpdate = MyCon.prepareStatement("INSERT INTO Credit VALUES(?,?,?,?)");		
 			PSUpdate.setString(1, Date);
@@ -115,7 +124,8 @@ public class AccMethods extends AccManager {
 		 
 		try {
 			
-			LastAmount = Amount ; 
+			LastAmount = Amount; 
+			InsertLastTrans();
 			// Create Prepared Statement for Credit :
 			PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?,?)");	
 			PSUpdate.setString(1, Date);
@@ -204,7 +214,6 @@ public class AccMethods extends AccManager {
 			while (MyRS.next()) {
 				MyRS.getString("BankBalance"); 
 				CurBalance = Integer.parseInt(MyRS.getString("BankBalance"));
-//				System.out.println("249 Working");
 				GUI.lblOutput_1.setText("Your Current Bank Balance : ₹" + CurBalance);
 			}
 		} // Try.
@@ -262,11 +271,8 @@ public class AccMethods extends AccManager {
 		HashMap<String, Runnable> ItemMap = new HashMap<String, Runnable>();
 		ItemMap.put("Bank Balance", this::BankBalance);
 		ItemMap.put("Last Transaction", this::LastAmount);
-		ItemMap.put("Last Ten Transaction", this::LastTenTrans);
+//		ItemMap.put("Last Ten Transaction", this::LastTenTrans);
 		ItemMap.put("Average Spend", this::AvgSpend);
-//		ItemMap.put("Total Credit", this::BankBalance);
-//		ItemMap.put("Total Debit", this::BankBalance);
-//		ItemMap.put("Bank Balance", this::BankBalance);
 		if (ItemMap.containsKey(SelectedItem)) {
 			ItemMap.get(SelectedItem).run();
 		}

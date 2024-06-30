@@ -1,6 +1,6 @@
 /*
- * Report : LastTenTrans Array is not updating when inserting transactions.
- * */
+  	Report : LastTenTrans Array is not updating when inserting transactions.
+ */
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -163,6 +163,7 @@ import javax.swing.DefaultComboBoxModel;
 	                String Username = new String(textField.getText());
 	                String Password = new String(passwordField.getPassword());
 	                AccMetd.ExistingUserLogin(Username,Password);
+	                
 	                if (AccMetd.Result == "Pass" ) {
 	                	Timer timer1 = new Timer(1000, new ActionListener() {
 	                		@Override
@@ -316,7 +317,7 @@ import javax.swing.DefaultComboBoxModel;
 	        panel_1.setLayout(null);
 	        
 	        JComboBox OthersComboBox = new JComboBox();
-	        OthersComboBox.setModel(new DefaultComboBoxModel(new String[] {"Bank Balance", "Last Transaction", "Last Ten Transaction", "Average Spend", "Total Credit", "Total Debit"}));
+	        OthersComboBox.setModel(new DefaultComboBoxModel(new String[] {"Bank Balance", "Last Transaction", "Average Spend", "Total Credit", "Total Debit"}));
 	        OthersComboBox.setBounds(66, 44, 261, 27);
 	        panel_1.add(OthersComboBox);
 	        
@@ -325,7 +326,7 @@ import javax.swing.DefaultComboBoxModel;
 	        panel_1.add(lblP_1);
 	        
 
-	        lblOutput_1 = new JLabel("Hello");
+	        lblOutput_1 = new JLabel(" ");
 	        lblOutput_1.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
 	        lblOutput_1.setHorizontalAlignment(SwingConstants.CENTER);
 	        lblOutput_1.setBounds(6, 138, 758, 48);
@@ -410,9 +411,14 @@ import javax.swing.DefaultComboBoxModel;
 	        		String Kind = (String) KindComboBox.getSelectedItem();
 	        		String DorCSelected = (String) DorCComboBox.getSelectedItem();
 	        		
+	        		DateTxtField.setText("");
+	        		AmountTxtField.setText("");
+	        		RemarksTxtField.setText("");
+	        		
 	        		if (DorCSelected == "Deposit" ) {
 	        			AccMetd.InsertCredit(Date,Amount,Remarks,Kind);
 	        			lblDorCConfirmation.setText("Amount Deposited Successfully.");
+	        			
 	        		}
 	        		else if (DorCSelected == "Withdraw" ) {
 	        			AccMetd.InsertDebit(Date,Amount,Remarks,Kind);
