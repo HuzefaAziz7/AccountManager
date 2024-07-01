@@ -43,6 +43,8 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 	public class AccSystemGUI extends JFrame {
 	
@@ -123,7 +125,7 @@ import javax.swing.DefaultComboBoxModel;
 	        btnNewButton.setFocusable(false);
 	        btnNewButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	                cardLayout.show(contentPane, "MenuPanel");
+	                cardLayout.show(contentPane, "LoginPanel");
 	            }
 	        });
 	        btnNewButton.setBounds(330, 262, 106, 25);
@@ -152,8 +154,10 @@ import javax.swing.DefaultComboBoxModel;
 	        LoginPanel.add(passwordField);
 	        
 	        lblVerifyStatus = new JLabel("");
-	        lblVerifyStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-	        lblVerifyStatus.setBounds(304, 319, 260, 25);
+	        lblVerifyStatus.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblVerifyStatus.setHorizontalTextPosition(SwingConstants.CENTER);
+	        lblVerifyStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+	        lblVerifyStatus.setBounds(242, 317, 260, 25);
 	        LoginPanel.add(lblVerifyStatus);
     		
 	        btnNewButton_1 = new JButton("Enter"); // Login Panel Button.
@@ -181,21 +185,29 @@ import javax.swing.DefaultComboBoxModel;
 	        btnNewButton_1.setBounds(317, 268, 106, 25);
 	        LoginPanel.add(btnNewButton_1);
 	        
-	        JLabel AskUserLoginLabel = new JLabel("For New Users, ");
-	        AskUserLoginLabel.setFont(new Font("Dialog", Font.BOLD, 13));
-	        AskUserLoginLabel.setBounds(213, 399, 106, 19);
-	        LoginPanel.add(AskUserLoginLabel);
-	        
-	        JButton AskUserLoginButton = new JButton("Click Here");
-	        AskUserLoginButton.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	                cardLayout.show(contentPane, "NewUserPanel");
+	        JLabel AskUserLoginLabel = new JLabel("Sign in");
+	        AskUserLoginLabel.addMouseListener(new MouseAdapter() {
+	        	@Override
+	        	public void mouseClicked(MouseEvent e) {
+	        		cardLayout.show(contentPane, "NewUserPanel");
 	        	}
 	        });
-	        AskUserLoginButton.setFocusable(false);
-	        AskUserLoginButton.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-	        AskUserLoginButton.setBounds(317, 393, 106, 25);
-	        LoginPanel.add(AskUserLoginButton);
+	        AskUserLoginLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+	        AskUserLoginLabel.setBounds(293, 372, 69, 19);
+	        LoginPanel.add(AskUserLoginLabel);
+	        
+	        JLabel lblforgetpassword = new JLabel("Forgot Password?");
+	        lblforgetpassword.addMouseListener(new MouseAdapter() {
+	        	@Override
+	        	public void mouseClicked(MouseEvent e) {
+
+	        	}
+	        });
+	        lblforgetpassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	        lblforgetpassword.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblforgetpassword.setHorizontalTextPosition(SwingConstants.CENTER);
+	        lblforgetpassword.setBounds(374, 369, 223, 25);
+	        LoginPanel.add(lblforgetpassword);
 
 
 //	        NewUserPanel.
@@ -442,9 +454,6 @@ import javax.swing.DefaultComboBoxModel;
 	        });
 	        btnBack.setBounds(6, 453, 117, 29);
 	        DorCPanel.add(btnBack);
-	        
-	        
-	        
 	    }
 	    
 	    private void Menu() {
