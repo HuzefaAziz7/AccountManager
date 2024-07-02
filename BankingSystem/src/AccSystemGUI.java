@@ -1,6 +1,7 @@
 /*
-  	Report : LastTenTrans Array is not updating when inserting transactions.
+  	Report : 
  */
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -47,7 +48,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 	public class AccSystemGUI extends JFrame {
-	
+		
+		static EmailController EmailCon = new EmailController();
 		static AccMethods AccMetd = new AccMethods() ;
 	    public static JPanel contentPane;
 	    private JPanel WelcomePanel;
@@ -80,6 +82,13 @@ import java.awt.event.MouseEvent;
 	    private JComboBox KindComboBox;
 	    private JLabel lblDorCConfirmation;
 	    static JLabel lblOutput_1 ;
+	    private JTextField txtfieldEmail;
+	    private JPanel ResetPasswordPanel;
+	    private JPanel ForgotPasswordPanel;
+	    private JLabel lblUsername;
+	    private JLabel lblEmailFP;
+	    private JTextField txtfieldUsernameFP;
+	    private JTextField txtfieldEmailFP;
 
 	    /**
 	     * Launch the application.
@@ -101,10 +110,11 @@ import java.awt.event.MouseEvent;
 	     * Create the frame.
 	     */
 	    public AccSystemGUI() {
+	    	setResizable(false);
 	    	
 	        setTitle("Bank");
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        setBounds(100, 100, 770, 516);
+	        setBounds(100, 100, 770, 518);
 	        contentPane = new JPanel();
 	        setContentPane(contentPane);
 	        contentPane.setLayout(new CardLayout(0, 0));
@@ -125,7 +135,7 @@ import java.awt.event.MouseEvent;
 	        btnNewButton.setFocusable(false);
 	        btnNewButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	                cardLayout.show(contentPane, "LoginPanel");
+	                cardLayout.show(contentPane, "ForgotPasswordPanel");
 	            }
 	        });
 	        btnNewButton.setBounds(330, 262, 106, 25);
@@ -168,7 +178,7 @@ import java.awt.event.MouseEvent;
 	                String Password = new String(passwordField.getPassword());
 	                AccMetd.ExistingUserLogin(Username,Password);
 	                
-	                if (AccMetd.Result == "Pass" ) {
+	                if (AccMetd.VerificationResult == "Pass" ) {
 	                	Timer timer1 = new Timer(1000, new ActionListener() {
 	                		@Override
 	        		        public void actionPerformed(ActionEvent e) {
@@ -200,7 +210,7 @@ import java.awt.event.MouseEvent;
 	        lblforgetpassword.addMouseListener(new MouseAdapter() {
 	        	@Override
 	        	public void mouseClicked(MouseEvent e) {
-
+	        		cardLayout.show(contentPane, "ForgotPasswordPanel");
 	        	}
 	        });
 	        lblforgetpassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -242,8 +252,18 @@ import java.awt.event.MouseEvent;
 	        pwfieldConfirmPassword.setBounds(307, 268, 240, 19);
 	        NewUserPanel.add(pwfieldConfirmPassword);
 	        
+	        JLabel lblEmail = new JLabel("Email Address");
+	        lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+	        lblEmail.setBounds(175, 309, 114, 16);
+	        NewUserPanel.add(lblEmail);
+	        
+	        txtfieldEmail = new JTextField();
+	        txtfieldEmail.setBounds(307, 304, 240, 26);
+	        NewUserPanel.add(txtfieldEmail);
+	        txtfieldEmail.setColumns(10);
+	        
 	        lblDifPassword2 = new JLabel(" ");
-	        lblDifPassword2.setBounds(196, 362, 351, 15);
+	        lblDifPassword2.setBounds(196, 409, 351, 15);
     		NewUserPanel.add(lblDifPassword2);
     		
 	        btnNewUserPanel = new JButton("Submit");
@@ -253,9 +273,10 @@ import java.awt.event.MouseEvent;
 	        		String NewUsername = new String(txtfieldNewUsername.getText()) ;
 	        		String NewPassword = new String(pwfieldNewPassword.getPassword()) ;
 	        		String ConfirmPassword = new String(pwfieldConfirmPassword.getPassword()) ;
-	        		 
+	        		String Email = new String(txtfieldEmail.getText());
+	        		
 	        		if (NewPassword.equals(ConfirmPassword)) { 
-	        			AccMetd.NewUserLogin(NewUsername, NewPassword);
+	        			AccMetd.NewUserLogin(NewUsername, NewPassword, Email);
 	        		    lblDifPassword2.setText("New Login Successful.. Please Wait");
 
 //	        		    After 1.5 seconds, change the label text to "ReDirecting to Login Page."
@@ -291,8 +312,10 @@ import java.awt.event.MouseEvent;
 	        
 	        btnNewUserPanel.setRolloverEnabled(false);
 	        btnNewUserPanel.setFocusable(false);
-	        btnNewUserPanel.setBounds(294, 304, 106, 25);
+	        btnNewUserPanel.setBounds(296, 358, 106, 25);
 	        NewUserPanel.add(btnNewUserPanel);
+	        
+	        
 	     
 //	        Menu Panel.
 	        MenuPanel = new JPanel();
@@ -454,16 +477,61 @@ import java.awt.event.MouseEvent;
 	        });
 	        btnBack.setBounds(6, 453, 117, 29);
 	        DorCPanel.add(btnBack);
+	        
+//	        Reset Password Panel.
+	        ResetPasswordPanel = new JPanel();
+	        contentPane.add(ResetPasswordPanel, "ResetPasswordPanel");
+	        ResetPasswordPanel.setLayout(null);
+	        
+//	        Forgot Password Panel.
+	        ForgotPasswordPanel = new JPanel();
+	        contentPane.add(ForgotPasswordPanel, "ForgotPasswordPanel");
+	        ForgotPasswordPanel.setLayout(null);
+	        
+	        lblUsername = new JLabel("Username");
+	        lblUsername.setBounds(231, 156, 78, 16);
+	        ForgotPasswordPanel.add(lblUsername);
+	        
+	        lblEmailFP = new JLabel("Email Address");
+	        lblEmailFP.setBounds(203, 199, 106, 16);
+	        ForgotPasswordPanel.add(lblEmailFP);
+	        
+	        txtfieldUsernameFP = new JTextField();
+	        txtfieldUsernameFP.setBounds(308, 151, 193, 26);
+	        ForgotPasswordPanel.add(txtfieldUsernameFP);
+	        txtfieldUsernameFP.setColumns(10);
+	        
+	        txtfieldEmailFP = new JTextField();
+	        txtfieldEmailFP.setBounds(308, 194, 193, 26);
+	        ForgotPasswordPanel.add(txtfieldEmailFP);
+	        txtfieldEmailFP.setColumns(10);
+	        
+	        JButton btnForgotPassword = new JButton("Submit");
+	        btnForgotPassword.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		String Username = new String (txtfieldUsernameFP.getText());
+	        		String Email = new String (txtfieldEmailFP.getText());
+	        		AccMetd.ForgotPassword(Username,Email);
+	        	}
+	        });
+	        btnForgotPassword.setBounds(283, 246, 117, 29);
+	        ForgotPasswordPanel.add(btnForgotPassword);
+	        
+	        JLabel lblDecription = new JLabel("Please Enter the given details to reset your password.");
+	        lblDecription.setBounds(189, 99, 489, 16);
+	        ForgotPasswordPanel.add(lblDecription);
 	    }
 	    
 	    private void Menu() {
 	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 	    	cardLayout.show(contentPane, "MenuPanel");
-	    }
+	    } // Menu.
 	    
 	    private void Back(String x, String y) { 	// Goes to the Previous Page.
 	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 	    	cardLayout.show(contentPane, "MenuPanel");
-	    }
+	    } // Back.
+	    
+	    
 }
 

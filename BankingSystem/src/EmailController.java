@@ -9,16 +9,19 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailController {
     public static void main(String[] args) {
-        String message = "Hello, this is an automated message from your banking system.";
-        String subject = "Password Reset";
-        String to = "socialhuzefa@gmail.com";
-        String from = "codehuzefa@gmail.com";
-        
-        sendEmail(message, subject, to, from);
+//		sendEmail(to);
     }
 
     // This method is used for sending the email.
-    private static void sendEmail(String message, String subject, String to, String from) {
+    public static void ResetPasswordEmail(String to) {
+    	String message = "Hello! This is an automated message from your banking system."
+    						+ "This Email is regarding the resetting of your password"
+    						+ ""
+    						+ "";
+        String subject = "Password Reset";
+//        String to = "socialhuzefa@gmail.com";
+        String from = "codehuzefa@gmail.com";
+        
         // Variable for Gmail.
         String host = "smtp.gmail.com";
         
@@ -44,6 +47,7 @@ public class EmailController {
         // Step 2: Compose the message.
         MimeMessage m = new MimeMessage(session);
         try {
+        	
             // From email.
             m.setFrom(new InternetAddress(from));
         
@@ -55,6 +59,7 @@ public class EmailController {
             
             // Adding message.
             m.setText(message);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +69,7 @@ public class EmailController {
             Transport.send(m);
             System.out.println("Sent successfully!!!");
         } catch (Exception e) {
-            e.printStackTrace();
+        	System.err.println("An error occurred: " + e.getMessage());
         }
     }
 }

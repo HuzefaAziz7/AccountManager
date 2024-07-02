@@ -13,10 +13,12 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class AccMethods extends AccManager {
 	
+	static EmailController EmailCon = new EmailController();
 	static PreparedStatement PSUpdate = null ;
+	private String VerifyEmail = null ; 
 	static String Date = null ; 
 	static int Amount ; 
-	static String Result = null ;
+	static String VerificationResult = null ; // Used in ExistingUserLogin().
 	static String Notes = null ;
 	static CallableStatement MyCallStmt = null ;
 	static int TempInt = 0 ;
@@ -32,15 +34,16 @@ public class AccMethods extends AccManager {
 	AccMethods() {
 		AccManager.DBConnection();
 	}
-	static public void NewUserLogin(String NewUsername, String NewPassword) {
+	static public void NewUserLogin(String NewUsername, String NewPassword,String Email) {
 		AccManager.DBConnection();
 		String HashedPassword = BCrypt.hashpw(NewPassword, BCrypt.gensalt());
 		
 		try {
 			// Prepared Statement for Inserting the Username and HashedPassword into DB.
-			PSUpdate = MyCon.prepareStatement(" INSERT INTO IdInfo(Username,UserPassword) VALUES (?,?) ");
+			PSUpdate = MyCon.prepareStatement(" INSERT INTO IdInfo(Username,UserPassword,Email) VALUES (?,?,?) ");
 			PSUpdate.setString(1, NewUsername);
 			PSUpdate.setString(2, HashedPassword);
+			PSUpdate.setString(3, Email);
 			int rowsAffected = PSUpdate.executeUpdate();
 			PSUpdate.close();
 		}
@@ -63,11 +66,11 @@ public class AccMethods extends AccManager {
 			boolean matched = BCrypt.checkpw(Password, hashedpassword);
             if (matched == true) {
             	GUI.lblVerifyStatus.setText("Login Successful.. Please Wait");
-            	Result = "Pass";
+            	VerificationResult = "Pass";
             }
         	else {
         		GUI.lblVerifyStatus.setText("Login Failed.. Please try again");
-        		Result = "Fail";
+        		VerificationResult = "Fail";
         	}
             PSUpdate.close();
 		} // Try.
@@ -76,8 +79,9 @@ public class AccMethods extends AccManager {
 			exc.printStackTrace();
 		} // Catch.
 	
-	} // ExistingUserLogin Method.
-		
+	} // ExistingUserLogin()
+	
+	
 	static public void InsertLastTrans() { // Changes Needed.
 		int InLastTrans = LastAmount ; 
 		LastTrans.add(InLastTrans);
@@ -278,6 +282,41 @@ public class AccMethods extends AccManager {
 		}
 		
 	} // OthersItemDisplay. (Menu Panel)
+	
+	public void ForgotPassword(String Username, String Email) {
+    	EmailVerification(Username,Email);
+    	if (VerifyEmail.equals("Pass")) {
+    		EmailCon.ResetPasswordEmail(Email);
+    	} 
+    	else if (VerifyEmail.equals("Fail")) {
+    		System.out.println("Email/Username Incorrect.");
+    	}
+    } // Forgot Password.
+	
+	private void EmailVerification(String Username, String Email)  {
+		String DBEmail = null ; 
+		System.out.println(Email);
+		try {
+			PSUpdate = MyCon.prepareStatement(" SELECT Email FROM IdInfo WHERE Username = ? ");
+			PSUpdate.setString(1, Username);
+			MyRS = PSUpdate.executeQuery();
+			if (MyRS.next()) {
+				DBEmail = MyRS.getString("Email") ; 
+				System.out.println(DBEmail);
+				if (DBEmail.equals(Email)) {
+					System.out.println("Email Verification Successful");
+					VerifyEmail = "Pass" ;
+				}
+				else {
+					VerifyEmail = "Fail" ;
+				}
+			}
+			PSUpdate.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	} // EmailVerification().
 	
 } // Class End.
 
