@@ -46,9 +46,10 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JFormattedTextField;
 
 	public class AccSystemGUI extends JFrame {
-		
+
 		static EmailController EmailCon = new EmailController();
 		static AccMethods AccMetd = new AccMethods() ;
 	    public static JPanel contentPane;
@@ -89,6 +90,13 @@ import java.awt.event.MouseEvent;
 	    private JLabel lblEmailFP;
 	    private JTextField txtfieldUsernameFP;
 	    private JTextField txtfieldEmailFP;
+	    static JLabel lblConfirmation;
+	    private JLabel lblPasskey;
+	    private JLabel lblNewPasswordRP;
+	    private JLabel lblConfirmPasswordRP;
+	    private JTextField txtfieldPasskeyRP;
+	    private JPasswordField psfieldNewPasswordRP;
+	    private JPasswordField psfieldConfirmPasswordRP;
 
 	    /**
 	     * Launch the application.
@@ -483,6 +491,38 @@ import java.awt.event.MouseEvent;
 	        contentPane.add(ResetPasswordPanel, "ResetPasswordPanel");
 	        ResetPasswordPanel.setLayout(null);
 	        
+	        lblPasskey = new JLabel("PassKey");
+	        lblPasskey.setHorizontalAlignment(SwingConstants.RIGHT);
+	        lblPasskey.setBounds(260, 158, 61, 16);
+	        ResetPasswordPanel.add(lblPasskey);
+	        
+	        txtfieldPasskeyRP = new JTextField();
+	        txtfieldPasskeyRP.setBounds(333, 153, 221, 26);
+	        ResetPasswordPanel.add(txtfieldPasskeyRP);
+	        txtfieldPasskeyRP.setColumns(10);
+	        
+	        lblNewPasswordRP = new JLabel("New Password");
+	        lblNewPasswordRP.setHorizontalAlignment(SwingConstants.RIGHT);
+	        lblNewPasswordRP.setBounds(231, 207, 90, 16);
+	        ResetPasswordPanel.add(lblNewPasswordRP);
+	        
+	        psfieldNewPasswordRP = new JPasswordField();
+	        psfieldNewPasswordRP.setBounds(333, 202, 221, 26);
+	        ResetPasswordPanel.add(psfieldNewPasswordRP);
+	        
+	        lblConfirmPasswordRP = new JLabel("Confirm New Password");
+	        lblConfirmPasswordRP.setHorizontalAlignment(SwingConstants.RIGHT);
+	        lblConfirmPasswordRP.setBounds(156, 258, 165, 16);
+	        ResetPasswordPanel.add(lblConfirmPasswordRP);
+	        
+	        psfieldConfirmPasswordRP = new JPasswordField();
+	        psfieldConfirmPasswordRP.setBounds(333, 253, 221, 26);
+	        ResetPasswordPanel.add(psfieldConfirmPasswordRP);
+	        
+	        JButton btnEnterRP = new JButton("Enter");
+	        btnEnterRP.setBounds(297, 303, 117, 29);
+	        ResetPasswordPanel.add(btnEnterRP);
+	        
 //	        Forgot Password Panel.
 	        ForgotPasswordPanel = new JPanel();
 	        contentPane.add(ForgotPasswordPanel, "ForgotPasswordPanel");
@@ -512,6 +552,32 @@ import java.awt.event.MouseEvent;
 	        		String Username = new String (txtfieldUsernameFP.getText());
 	        		String Email = new String (txtfieldEmailFP.getText());
 	        		AccMetd.ForgotPassword(Username,Email);
+	        		
+	        		if (AccMetd.VerifyEmail.equals("Pass")) {
+	        			Timer timer1 = new Timer(1500, new ActionListener() {
+	        		        
+	        		    	@Override
+	        		        public void actionPerformed(ActionEvent e) {
+	        		    		lblConfirmation.setText("ReDirecting to Reset Password Page.");
+
+//	        		            After 1 second, Return to the Login Panel.
+	        		            Timer timer2 = new Timer(1000, new ActionListener() {
+	        		                
+	        		            	@Override
+	        		                public void actionPerformed(ActionEvent e) {
+	        		                    //cardLayout.previous(LoginPanel);
+	        		                    cardLayout.show(contentPane, "ResetPasswordPanel");
+	        		                }
+	        		            });
+	        		            
+	        		            timer2.setRepeats(false);
+	        		            timer2.start();
+	        		        }
+	        		    });
+	        		    
+	        		    timer1.setRepeats(false);
+	        		    timer1.start(); 
+	        		}
 	        	}
 	        });
 	        btnForgotPassword.setBounds(283, 246, 117, 29);
@@ -520,6 +586,11 @@ import java.awt.event.MouseEvent;
 	        JLabel lblDecription = new JLabel("Please Enter the given details to reset your password.");
 	        lblDecription.setBounds(189, 99, 489, 16);
 	        ForgotPasswordPanel.add(lblDecription);
+	        
+	        lblConfirmation = new JLabel(" ");
+	        lblConfirmation.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblConfirmation.setBounds(129, 318, 489, 16);
+	        ForgotPasswordPanel.add(lblConfirmation);
 	    }
 	    
 	    private void Menu() {
@@ -531,7 +602,5 @@ import java.awt.event.MouseEvent;
 	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 	    	cardLayout.show(contentPane, "MenuPanel");
 	    } // Back.
-	    
-	    
 }
 

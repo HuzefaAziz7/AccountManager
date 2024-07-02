@@ -5,6 +5,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 import javax.swing.DefaultComboBoxModel;
@@ -15,7 +16,7 @@ public class AccMethods extends AccManager {
 	
 	static EmailController EmailCon = new EmailController();
 	static PreparedStatement PSUpdate = null ;
-	private String VerifyEmail = null ; 
+	public String VerifyEmail = null ; 
 	static String Date = null ; 
 	static int Amount ; 
 	static String VerificationResult = null ; // Used in ExistingUserLogin().
@@ -23,6 +24,7 @@ public class AccMethods extends AccManager {
 	static CallableStatement MyCallStmt = null ;
 	static int TempInt = 0 ;
 	static String TempString = null ; 
+	static private int Passkey = 0 ; 
 	static String KindMenu = "Select Category : \n" 
 			+ "1. Ration \n" 
 			+ "2. Outing \n"
@@ -131,7 +133,7 @@ public class AccMethods extends AccManager {
 			LastAmount = Amount; 
 			InsertLastTrans();
 			// Create Prepared Statement for Credit :
-			PSUpdate = MyCon.prepareStatement("insert into Debit values(?,?,?,?)");	
+			PSUpdate = MyCon.prepareStatement("INSERT INTO Debit VALUES(?,?,?,?)");	
 			PSUpdate.setString(1, Date);
 			PSUpdate.setDouble(2, Amount);
 			PSUpdate.setString(3, Notes);
@@ -286,25 +288,25 @@ public class AccMethods extends AccManager {
 	public void ForgotPassword(String Username, String Email) {
     	EmailVerification(Username,Email);
     	if (VerifyEmail.equals("Pass")) {
-    		EmailCon.ResetPasswordEmail(Email);
+    		GeneratePasskey();
+    		EmailCon.ResetPasswordEmail(Email,Passkey);
     	} 
     	else if (VerifyEmail.equals("Fail")) {
-    		System.out.println("Email/Username Incorrect.");
+    		GUI.lblConfirmation.setText("Email/Username Incorrect."); 
     	}
     } // Forgot Password.
 	
 	private void EmailVerification(String Username, String Email)  {
 		String DBEmail = null ; 
-		System.out.println(Email);
+
 		try {
 			PSUpdate = MyCon.prepareStatement(" SELECT Email FROM IdInfo WHERE Username = ? ");
 			PSUpdate.setString(1, Username);
 			MyRS = PSUpdate.executeQuery();
 			if (MyRS.next()) {
 				DBEmail = MyRS.getString("Email") ; 
-				System.out.println(DBEmail);
+				
 				if (DBEmail.equals(Email)) {
-					System.out.println("Email Verification Successful");
 					VerifyEmail = "Pass" ;
 				}
 				else {
@@ -317,6 +319,12 @@ public class AccMethods extends AccManager {
 		}
 		
 	} // EmailVerification().
+	
+	private void GeneratePasskey() {
+		Random random = new Random();
+		int min = 100000, max = 1000000 ;
+		Passkey = random.nextInt(max - min + 1) + min ;
+	} // GeneratePasskey()
 	
 } // Class End.
 

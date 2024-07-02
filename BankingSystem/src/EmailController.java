@@ -7,19 +7,19 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class EmailController {
+public class EmailController extends AccSystemGUI {
     public static void main(String[] args) {
-//		sendEmail(to);
+        // sendEmail(to);
     }
 
     // This method is used for sending the email.
-    public static void ResetPasswordEmail(String to) {
-    	String message = "Hello! This is an automated message from your banking system."
-    						+ "This Email is regarding the resetting of your password"
-    						+ ""
-    						+ "";
+    public static void ResetPasswordEmail(String to, int Passkey) {
+        String message = "Hello! This is an automated message from your banking system. \n"
+                + "This Email is regarding the resetting of your password \n"
+                + "Kindly Enter this Passkey " + Passkey + " to reset your password. \n "
+                + "Thank You. \n";
+        
         String subject = "Password Reset";
-//        String to = "socialhuzefa@gmail.com";
         String from = "codehuzefa@gmail.com";
         
         // Variable for Gmail.
@@ -42,12 +42,11 @@ public class EmailController {
             }
         });
         
-        session.setDebug(true);
+        session.setDebug(false);
 
         // Step 2: Compose the message.
         MimeMessage m = new MimeMessage(session);
         try {
-        	
             // From email.
             m.setFrom(new InternetAddress(from));
         
@@ -59,7 +58,6 @@ public class EmailController {
             
             // Adding message.
             m.setText(message);
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,9 +65,9 @@ public class EmailController {
         // Step 3: Send the message using Transport class.
         try {
             Transport.send(m);
-            System.out.println("Sent successfully!!!");
+            lblConfirmation.setText("Email Sent Successfully. Please check your email to reset password.");
         } catch (Exception e) {
-        	System.err.println("An error occurred: " + e.getMessage());
+            // Handle the exception if needed
         }
     }
 }
