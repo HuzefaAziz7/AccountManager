@@ -97,6 +97,7 @@ import javax.swing.JFormattedTextField;
 	    private JTextField txtfieldPasskeyRP;
 	    private JPasswordField psfieldNewPasswordRP;
 	    private JPasswordField psfieldConfirmPasswordRP;
+	    static JLabel lblConfirmationRP ;
 
 	    /**
 	     * Launch the application.
@@ -143,7 +144,7 @@ import javax.swing.JFormattedTextField;
 	        btnNewButton.setFocusable(false);
 	        btnNewButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	                cardLayout.show(contentPane, "ForgotPasswordPanel");
+	                cardLayout.show(contentPane, "LoginPanel");
 	            }
 	        });
 	        btnNewButton.setBounds(330, 262, 106, 25);
@@ -520,8 +521,54 @@ import javax.swing.JFormattedTextField;
 	        ResetPasswordPanel.add(psfieldConfirmPasswordRP);
 	        
 	        JButton btnEnterRP = new JButton("Enter");
+	        btnEnterRP.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		String Username = new String (txtfieldUsernameFP.getText());
+	        		int PasskeyRP = Integer.parseInt(txtfieldPasskeyRP.getText()); 
+	        		String NewPassword = new String(psfieldNewPasswordRP.getPassword());
+	        		String ConfirmPassword = new String(psfieldConfirmPasswordRP.getPassword());
+	        		
+	        		if (NewPassword.equals(ConfirmPassword)) {
+	        			AccMetd.ResetPassword(Username,PasskeyRP, NewPassword);
+	        			Timer timer1 = new Timer(1500, new ActionListener() {
+	        		        
+	        		    	@Override
+	        		        public void actionPerformed(ActionEvent e) {
+	        		    		lblConfirmationRP.setText("ReDirecting to Login Page.");
+
+//	        		            After 1 second, Return to the Login Panel.
+	        		            Timer timer2 = new Timer(1000, new ActionListener() {
+	        		                
+	        		            	@Override
+	        		                public void actionPerformed(ActionEvent e) {
+	        		                    //cardLayout.previous(LoginPanel);
+	        		                    cardLayout.show(contentPane, "LoginPanel");
+	        		                }
+	        		            });
+	        		            
+	        		            timer2.setRepeats(false);
+	        		            timer2.start();
+	        		        }
+	        		    });
+	        		    
+	        		    timer1.setRepeats(false);
+	        		    timer1.start();
+	        		}
+	        		
+	        		else {
+	        			lblConfirmation.setText("Confirmed Password Incorrect.");
+	        		}
+	        		
+	        	
+	        	}
+	        });
 	        btnEnterRP.setBounds(297, 303, 117, 29);
 	        ResetPasswordPanel.add(btnEnterRP);
+	        
+	        lblConfirmationRP = new JLabel("");
+	        lblConfirmationRP.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblConfirmationRP.setBounds(29, 360, 682, 16);
+	        ResetPasswordPanel.add(lblConfirmationRP);
 	        
 //	        Forgot Password Panel.
 	        ForgotPasswordPanel = new JPanel();
@@ -603,4 +650,3 @@ import javax.swing.JFormattedTextField;
 	    	cardLayout.show(contentPane, "MenuPanel");
 	    } // Back.
 }
-

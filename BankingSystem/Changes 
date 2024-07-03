@@ -12,3 +12,4 @@
 	
  Changes Needed in Program : 
 	14. Change the LastTransactino and LastTenTransactions Method. Make it directly dependent to the mysql script. 
+	15. While Entering the Username during Login, If the username is not present in the SQL DB, the system prints an error. 

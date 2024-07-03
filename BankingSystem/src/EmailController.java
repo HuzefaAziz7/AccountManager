@@ -67,7 +67,8 @@ public class EmailController extends AccSystemGUI {
             Transport.send(m);
             lblConfirmation.setText("Email Sent Successfully. Please check your email to reset password.");
         } catch (Exception e) {
-            // Handle the exception if needed
+        	lblConfirmation.setText("Failed to send Email. Please try again.");
         }
     }
 }
+

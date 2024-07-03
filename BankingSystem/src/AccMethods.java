@@ -37,7 +37,6 @@ public class AccMethods extends AccManager {
 		AccManager.DBConnection();
 	}
 	static public void NewUserLogin(String NewUsername, String NewPassword,String Email) {
-		AccManager.DBConnection();
 		String HashedPassword = BCrypt.hashpw(NewPassword, BCrypt.gensalt());
 		
 		try {
@@ -55,7 +54,6 @@ public class AccMethods extends AccManager {
 	} // NewUserLogin Method.
 	
 	static public void ExistingUserLogin(String Username, String Password) {
-		AccManager.DBConnection();
 		String hashedpassword = null ;
 
 		try {
@@ -325,6 +323,26 @@ public class AccMethods extends AccManager {
 		int min = 100000, max = 1000000 ;
 		Passkey = random.nextInt(max - min + 1) + min ;
 	} // GeneratePasskey()
+	
+	public void ResetPassword(String Username,int PasskeyRP, String NewPassword) {
+		
+		if (Passkey == PasskeyRP) {
+			try {
+				String HashedPassword = BCrypt.hashpw(NewPassword, BCrypt.gensalt());
+				PSUpdate = MyCon.prepareStatement(" UPDATE IdInfo SET UserPassword = ? WHERE Username = ? ");
+				PSUpdate.setString(1, HashedPassword);
+				PSUpdate.setString(2, Username);
+				int rowsAffected = PSUpdate.executeUpdate();
+				GUI.lblConfirmationRP.setText("Password Changed Successfully.");
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		} 
+		else {
+			System.out.println("Passkey Incorrect.!");
+		}
+		
+	} // ResetPassword()
 	
 } // Class End.
 
