@@ -627,6 +627,7 @@ import javax.swing.JFormattedTextField;
 	        		}
 	        	}
 	        });
+	        
 	        btnForgotPassword.setBounds(283, 246, 117, 29);
 	        ForgotPasswordPanel.add(btnForgotPassword);
 	        

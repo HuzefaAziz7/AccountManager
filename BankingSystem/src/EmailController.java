@@ -58,6 +58,7 @@ public class EmailController extends AccSystemGUI {
             
             // Adding message.
             m.setText(message);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
