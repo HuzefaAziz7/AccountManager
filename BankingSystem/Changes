@@ -1,14 +1,4 @@
- Main Features/Changes to be made :  
-   6. Ordinal Numbers for Transactions History. (HARD)
-   7. User can search for Transactions/Kinds. (HARD) 
-   13. Create a Saving Account Pot System. (HARD)
- 
-
- Side Features that can be added : 
-	11. Option to Empty Tables (Use Truncate). (EASY)
-	
-	
- Changes Needed in Program : 
+Changes Needed in Program : 
 	10. Is AccBalance Needed?
 	14. Change the LastTransactino and LastTenTransactions Method. Make it directly dependent to the mysql script. 
 	15. While Entering the Username during Login, If the username is not present in the SQL DB, the system prints an error. 
@@ -16,14 +6,18 @@
 
 
 Hard :
+- Ordinal Numbers for Transactions History. 
+- User can search for Transactions/Kinds.  
+- Create a Saving Account Pot System. 
 - Fraud detection mechanisms.
 - Chatbot integration for customer inquiries.
--Credit/Debit Card Feature.
+- Credit/Debit Card Feature.
 - Peer-to-peer (P2P) payments.
 - Currency exchange. (API)
 - Email, SMS, and push notifications for account activity.
 - User-friendly dashboard with customisable widgets.
 - Admin dashboards for monitoring system performance and user activity.
+
 Moderate :
 - Support for multiple account types (savings, checking, credit, etc.).
 - Transaction history and statements.
@@ -32,6 +26,8 @@ Moderate :
 - Savings goals and progress tracking.
 - Dark mode and accessibility features.
 - Financial reports and analytics for users.
+
 Easy : 
 - Account creation, updating, and deletion. 
 - Multi-factor authentication (MFA).
+- Option to Empty Tables (Use Truncate). 
