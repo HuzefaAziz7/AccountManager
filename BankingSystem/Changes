@@ -8,23 +8,23 @@ Changes Needed in Program :
 Hard :
 - Ordinal Numbers for Transactions History. 
 - User can search for Transactions/Kinds.  
-- Create a Saving Account Pot System. 
+- Create a Saving Account Pot System. * 
 - Fraud detection mechanisms.
-- Chatbot integration for customer inquiries.
-- Credit/Debit Card Feature.
-- Peer-to-peer (P2P) payments.
-- Currency exchange. (API)
-- Email, SMS, and push notifications for account activity.
+- Chatbot integration for customer inquiries. * 
+- Credit/Debit Card Feature. * 
+- Peer-to-peer (P2P) payments. 
+- Currency exchange. (API) * 
+- Email, SMS, and push notifications for account activity. * 
 - User-friendly dashboard with customisable widgets.
 - Admin dashboards for monitoring system performance and user activity.
 
 Moderate :
-- Support for multiple account types (savings, checking, credit, etc.).
-- Transaction history and statements.
-- Scheduled and recurring transactions.
-- Ticketing system for issue tracking.
-- Savings goals and progress tracking.
-- Dark mode and accessibility features.
+- Support for multiple account types (savings, checking, credit, etc.). * 
+- Transaction history and statements. 
+- Scheduled and recurring transactions. * 
+- Ticketing system for issue tracking. 
+- Savings goals and progress tracking. * 
+- Dark mode and accessibility features. 
 - Financial reports and analytics for users.
 
 Easy : 
