@@ -47,6 +47,8 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JToolBar;
+import javax.swing.UIManager;
 
 	public class AccSystemGUI extends JFrame {
 
@@ -98,6 +100,8 @@ import javax.swing.JFormattedTextField;
 	    private JPasswordField psfieldNewPasswordRP;
 	    private JPasswordField psfieldConfirmPasswordRP;
 	    static JLabel lblConfirmationRP ;
+	    private JPanel ControlPanel;
+	    private JButton BtnTBP1;
 
 	    /**
 	     * Launch the application.
@@ -144,7 +148,7 @@ import javax.swing.JFormattedTextField;
 	        btnNewButton.setFocusable(false);
 	        btnNewButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	                cardLayout.show(contentPane, "LoginPanel");
+	                cardLayout.show(contentPane, "TestMenuPanel");
 	            }
 	        });
 	        btnNewButton.setBounds(330, 262, 106, 25);
@@ -183,21 +187,28 @@ import javax.swing.JFormattedTextField;
 	        btnNewButton_1.setFocusable(false);
 	        btnNewButton_1.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	                String Username = new String(textField.getText());
+	        		String Username = new String(textField.getText());
 	                String Password = new String(passwordField.getPassword());
-	                AccMetd.ExistingUserLogin(Username,Password);
-	                
-	                if (AccMetd.VerificationResult == "Pass" ) {
-	                	Timer timer1 = new Timer(1000, new ActionListener() {
-	                		@Override
-	        		        public void actionPerformed(ActionEvent e) {
-	                			Menu();
-	        		        }
-	                	});
-	                	timer1.setRepeats(false);
-	        		    timer1.start();
+	                if (Username.equals("")) { 
+	                	System.out.println("Cannot be Null.");
 	                }
-	                else {}
+	                
+	                else {
+	                	AccMetd.ExistingUserLogin(Username,Password);
+		                
+		                if (AccMetd.VerificationResult == "Pass" ) {
+		                	Timer timer1 = new Timer(1000, new ActionListener() {
+		                		@Override
+		        		        public void actionPerformed(ActionEvent e) {
+		                			Menu();
+		                			AccMetd.VerificationResult = null ; 
+		        		        }
+		                	});
+		                	timer1.setRepeats(false);
+		        		    timer1.start();
+		                }
+		                else {}
+	                } 
 	        	}
 	        });
 	        btnNewButton_1.setRolloverEnabled(false);
@@ -639,6 +650,60 @@ import javax.swing.JFormattedTextField;
 	        lblConfirmation.setHorizontalAlignment(SwingConstants.CENTER);
 	        lblConfirmation.setBounds(129, 318, 489, 16);
 	        ForgotPasswordPanel.add(lblConfirmation);
+	        
+	        JPanel TestMenuPanel = new JPanel();
+	        contentPane.add(TestMenuPanel, "TestMenuPanel");
+	        TestMenuPanel.setLayout(null);
+	        
+	        JTabbedPane TabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	        TabbedPane.setBounds(157, -28, 613, 518);
+	        TestMenuPanel.add(TabbedPane);
+	        
+	        JPanel TabbedPanel1 = new JPanel(); // Index is 0. 
+	        TabbedPanel1.setBackground(UIManager.getColor("Button.background"));
+	        TabbedPane.addTab("P2", null, TabbedPanel1, null);
+	        TabbedPanel1.setLayout(null);
+	        
+	        JLabel lblNewLabel_1 = new JLabel("Tab1");
+	        lblNewLabel_1.setBounds(266, 197, 61, 16);
+	        TabbedPanel1.add(lblNewLabel_1);
+	        
+	        JPanel TabbedPanel2 = new JPanel(); // Index is 1.
+	        TabbedPanel2.setBackground(UIManager.getColor("Button.background"));
+	        TabbedPane.addTab("New tab", null, TabbedPanel2, null);
+	        TabbedPanel2.setLayout(null);
+	        
+	        JLabel lblNewLabel_2 = new JLabel("Tab2");
+	        lblNewLabel_2.setBounds(284, 186, 61, 16);
+	        TabbedPanel2.add(lblNewLabel_2);
+	        
+	        ControlPanel = new JPanel();
+	        ControlPanel.setBackground(UIManager.getColor("Button.background"));
+	        ControlPanel.setForeground(new Color(50, 81, 255));
+	        ControlPanel.setBounds(0, 32, 154, 458);
+	        TestMenuPanel.add(ControlPanel);
+	        ControlPanel.setLayout(null);
+	        ControlPanel.setVisible(true);
+	        
+	        BtnTBP1 = new JButton("Tab 1");
+	        BtnTBP1.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+//	        		System.out.println("Tab 1 Opened");
+	        		TabbedPane.setSelectedIndex(0);
+	        	}
+	        });
+	        BtnTBP1.setBounds(18, 37, 117, 29);
+	        ControlPanel.add(BtnTBP1);
+	        
+	        JButton BtnTBP2 = new JButton("Tab 2");
+	        BtnTBP2.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+//	        		System.out.println("Tab 2 Opened");
+	        		TabbedPane.setSelectedIndex(1);
+	        	}
+	        });
+	        BtnTBP2.setBounds(18, 78, 117, 29);
+	        ControlPanel.add(BtnTBP2);
 	    }
 	    
 	    private void Menu() {
