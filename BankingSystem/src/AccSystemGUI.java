@@ -4,17 +4,19 @@
 
 import java.awt.EventQueue;
 
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Window.Type;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.Component;
-
+import javax.swing.ImageIcon;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -59,7 +61,6 @@ import javax.swing.UIManager;
 	    private JPanel LoginPanel;
 	    private JTextField textField;
 	    private JPasswordField passwordField;
-	    private JPanel MenuPanel;
 	    private JLabel lblNewLabel_3;
 	    private JButton btnNewButton_1;
 	    private JPanel NewUserPanel;
@@ -72,11 +73,8 @@ import javax.swing.UIManager;
 	    private JPasswordField pwfieldConfirmPassword;
 	    static JLabel lblDifPassword2 ; 
 	    static JLabel lblVerifyStatus;
-	    JLabel lblVerifyPanelSample ;
 	    JComboBox MenuComboBox = new JComboBox();
-	    private JLabel lblDorC;
-	    private JPanel panel_1;
-	    private JButton btnMPPanelDorC;
+	    private JPanel Panel;
 	    private JButton btnMPOthers;
 	    private JTextField DateTxtField;
 	    private JTextField AmountTxtField;
@@ -125,7 +123,7 @@ import javax.swing.UIManager;
 	    public AccSystemGUI() {
 	    	setResizable(false);
 	    	
-	        setTitle("Bank");
+	        setTitle("Banking System");
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        setBounds(100, 100, 770, 518);
 	        contentPane = new JPanel();
@@ -335,169 +333,6 @@ import javax.swing.UIManager;
 	        btnNewUserPanel.setBounds(296, 358, 106, 25);
 	        NewUserPanel.add(btnNewUserPanel);
 	        
-	        
-	     
-//	        Menu Panel.
-	        MenuPanel = new JPanel();
-	        contentPane.add(MenuPanel, "MenuPanel");
-	        MenuPanel.setLayout(null);
-    
-	        lblVerifyPanelSample = new JLabel("Main Menu");
-	        lblVerifyPanelSample.setFont(new Font("Lucida Grande", Font.PLAIN, 29));
-	        lblVerifyPanelSample.setBounds(310, 23, 166, 34);
-	        MenuPanel.add(lblVerifyPanelSample);
-	        
-	        JPanel panel = new JPanel();
-	        panel.setBounds(6, 314, 341, 168);
-	        MenuPanel.add(panel);
-	        panel.setLayout(null);
-	        
-	        lblDorC = new JLabel("Deposit/Withdraw");
-	        lblDorC.setBounds(117, 55, 118, 16);
-	        panel.add(lblDorC);
-	        
-	        btnMPPanelDorC = new JButton("Enter");
-	        btnMPPanelDorC.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		cardLayout.show(contentPane, "DorCPanel");
-	        	}
-	        });
-	        btnMPPanelDorC.setFocusable(false);
-	        btnMPPanelDorC.setBounds(117, 83, 117, 29);
-	        panel.add(btnMPPanelDorC);
-	        
-	        panel_1 = new JPanel();
-	        panel_1.setBounds(346, 314, 418, 168);
-	        MenuPanel.add(panel_1);
-	        panel_1.setLayout(null);
-	        
-	        JComboBox OthersComboBox = new JComboBox();
-	        OthersComboBox.setModel(new DefaultComboBoxModel(new String[] {"Bank Balance", "Last Transaction", "Average Spend", "Total Credit", "Total Debit"}));
-	        OthersComboBox.setBounds(66, 44, 261, 27);
-	        panel_1.add(OthersComboBox);
-	        
-	        JLabel lblP_1 = new JLabel("Others");
-	        lblP_1.setBounds(164, 16, 61, 16);
-	        panel_1.add(lblP_1);
-	        
-
-	        lblOutput_1 = new JLabel(" ");
-	        lblOutput_1.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-	        lblOutput_1.setHorizontalAlignment(SwingConstants.CENTER);
-	        lblOutput_1.setBounds(6, 138, 758, 48);
-	        MenuPanel.add(lblOutput_1);
-	        
-	        btnMPOthers = new JButton("Enter");
-	        btnMPOthers.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		 String SelectedItem = (String) OthersComboBox.getSelectedItem(); 
-	        		 AccMetd.OthersItemDisplay(SelectedItem); 
-	        	
-	        	}
-	        });
-	        btnMPOthers.setFocusable(false);
-	        btnMPOthers.setBounds(136, 83, 117, 29);
-	        panel_1.add(btnMPOthers);
-	        
-	        
-//	        DorC Panel.
-	        JPanel DorCPanel = new JPanel();
-	        contentPane.add(DorCPanel, "DorCPanel");
-	        DorCPanel.setLayout(null);
-	        
-	        JLabel lblDorC1 = new JLabel("Deposit/Withdraw");
-	        lblDorC1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-	        lblDorC1.setHorizontalAlignment(SwingConstants.CENTER);
-	        lblDorC1.setBounds(277, 26, 210, 33);
-	        DorCPanel.add(lblDorC1);
-	        
-	        JLabel lblDorC2 = new JLabel("Remarks");
-	        lblDorC2.setHorizontalAlignment(SwingConstants.CENTER);
-	        lblDorC2.setBounds(213, 328, 61, 16);
-	        DorCPanel.add(lblDorC2);
-	        
-	        JLabel lblDorC3 = new JLabel("Date");
-	        lblDorC3.setHorizontalAlignment(SwingConstants.CENTER);
-	        lblDorC3.setBounds(213, 209, 61, 16);
-	        DorCPanel.add(lblDorC3);
-	        
-	        JLabel lblDorC4 = new JLabel("Amount");
-	        lblDorC4.setHorizontalAlignment(SwingConstants.CENTER);
-	        lblDorC4.setBounds(213, 269, 61, 16);
-	        DorCPanel.add(lblDorC4);
-	        
-	        lblDorC5 = new JLabel("Kind");
-	        lblDorC5.setHorizontalAlignment(SwingConstants.CENTER);
-	        lblDorC5.setBounds(213, 383, 61, 16);
-	        DorCPanel.add(lblDorC5);
-	        
-	        DateTxtField = new JTextField();
-	        DateTxtField.setBounds(286, 204, 210, 26);
-	        DorCPanel.add(DateTxtField);
-	        DateTxtField.setColumns(10);
-	        
-	        AmountTxtField = new JTextField();
-	        AmountTxtField.setBounds(286, 264, 210, 26);
-	        DorCPanel.add(AmountTxtField);
-	        AmountTxtField.setColumns(10);
-	        
-	        RemarksTxtField = new JTextField();
-	        RemarksTxtField.setBounds(286, 323, 210, 26);
-	        DorCPanel.add(RemarksTxtField);
-	        RemarksTxtField.setColumns(10);
-	        
-	        KindComboBox = new JComboBox();
-	        KindComboBox.setModel(new DefaultComboBoxModel(new String[] {"Ration", "Outing", "Food", "School", "Others"}));
-	        KindComboBox.setBounds(286, 379, 210, 27);
-	        DorCPanel.add(KindComboBox);
-	        
-	        JComboBox DorCComboBox = new JComboBox();
-	        DorCComboBox.setModel(new DefaultComboBoxModel(new String[] {"Deposit", "Withdraw"}));
-	        DorCComboBox.setBounds(286, 131, 210, 27);
-	        DorCPanel.add(DorCComboBox);
-	        
-	        JButton btnDorC = new JButton("Enter");
-	        btnDorC.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		String Date = new String (DateTxtField.getText());
-	        		String TempAmount = new String (AmountTxtField.getText());
-	        		int Amount = Integer.valueOf(TempAmount);
-	        		String Remarks = new String (RemarksTxtField.getText());
-	        		String Kind = (String) KindComboBox.getSelectedItem();
-	        		String DorCSelected = (String) DorCComboBox.getSelectedItem();
-	        		
-	        		DateTxtField.setText("");
-	        		AmountTxtField.setText("");
-	        		RemarksTxtField.setText("");
-	        		
-	        		if (DorCSelected == "Deposit" ) {
-	        			AccMetd.InsertCredit(Date,Amount,Remarks,Kind);
-	        			lblDorCConfirmation.setText("Amount Deposited Successfully.");
-	        			
-	        		}
-	        		else if (DorCSelected == "Withdraw" ) {
-	        			AccMetd.InsertDebit(Date,Amount,Remarks,Kind);
-	        			lblDorCConfirmation.setText("Amount Withdrawn Successfully.");
-	        		}
-	        	}
-	        });
-	        btnDorC.setBounds(591, 264, 117, 29);
-	        DorCPanel.add(btnDorC);
-	        
-	        lblDorCConfirmation = new JLabel(" ");
-	        lblDorCConfirmation.setHorizontalAlignment(SwingConstants.CENTER);
-	        lblDorCConfirmation.setBounds(545, 328, 210, 16);
-	        DorCPanel.add(lblDorCConfirmation);
-	        
-	        JButton btnBack = new JButton("Back");
-	        btnBack.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		Back("contentPane","MenuPanel");
-	        	}
-	        });
-	        btnBack.setBounds(6, 453, 117, 29);
-	        DorCPanel.add(btnBack);
-	        
 //	        Reset Password Panel.
 	        ResetPasswordPanel = new JPanel();
 	        contentPane.add(ResetPasswordPanel, "ResetPasswordPanel");
@@ -656,63 +491,198 @@ import javax.swing.UIManager;
 	        TestMenuPanel.setLayout(null);
 	        
 	        JTabbedPane TabbedPane = new JTabbedPane(JTabbedPane.TOP);
-	        TabbedPane.setBounds(157, -28, 613, 518);
+	        TabbedPane.setBounds(95, -28, 675, 518);
 	        TestMenuPanel.add(TabbedPane);
 	        
-	        JPanel TabbedPanel1 = new JPanel(); // Index is 0. 
-	        TabbedPanel1.setBackground(UIManager.getColor("Button.background"));
-	        TabbedPane.addTab("P2", null, TabbedPanel1, null);
-	        TabbedPanel1.setLayout(null);
 	        
-	        JLabel lblNewLabel_1 = new JLabel("Tab1");
-	        lblNewLabel_1.setBounds(266, 197, 61, 16);
-	        TabbedPanel1.add(lblNewLabel_1);
+//	        DorC Panel.
+	        JPanel DorCPanel = new JPanel();
+	        TabbedPane.addTab("New tab", null, DorCPanel, null);
+	        DorCPanel.setLayout(null);
 	        
-	        JPanel TabbedPanel2 = new JPanel(); // Index is 1.
-	        TabbedPanel2.setBackground(UIManager.getColor("Button.background"));
-	        TabbedPane.addTab("New tab", null, TabbedPanel2, null);
-	        TabbedPanel2.setLayout(null);
+	        JLabel lblDorC1 = new JLabel("Deposit/Withdraw");
+	        lblDorC1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+	        lblDorC1.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblDorC1.setBounds(217, 26, 210, 33);
+	        DorCPanel.add(lblDorC1);
 	        
-	        JLabel lblNewLabel_2 = new JLabel("Tab2");
-	        lblNewLabel_2.setBounds(284, 186, 61, 16);
-	        TabbedPanel2.add(lblNewLabel_2);
+	        JLabel lblDorC2 = new JLabel("Remarks");
+	        lblDorC2.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblDorC2.setBounds(153, 320, 61, 16);
+	        DorCPanel.add(lblDorC2);
+	        
+	        JLabel lblDorC3 = new JLabel("Date");
+	        lblDorC3.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblDorC3.setBounds(153, 201, 61, 16);
+	        DorCPanel.add(lblDorC3);
+	        
+	        JLabel lblDorC4 = new JLabel("Amount");
+	        lblDorC4.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblDorC4.setBounds(153, 261, 61, 16);
+	        DorCPanel.add(lblDorC4);
+	        
+	        lblDorC5 = new JLabel("Kind");
+	        lblDorC5.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblDorC5.setBounds(153, 375, 61, 16);
+	        DorCPanel.add(lblDorC5);
+	        
+	        DateTxtField = new JTextField();
+	        DateTxtField.setBounds(226, 196, 210, 26);
+	        DorCPanel.add(DateTxtField);
+	        DateTxtField.setColumns(10);
+	        
+	        AmountTxtField = new JTextField();
+	        AmountTxtField.setBounds(226, 256, 210, 26);
+	        DorCPanel.add(AmountTxtField);
+	        AmountTxtField.setColumns(10);
+	        
+	        RemarksTxtField = new JTextField();
+	        RemarksTxtField.setBounds(226, 315, 210, 26);
+	        DorCPanel.add(RemarksTxtField);
+	        RemarksTxtField.setColumns(10);
+	        
+	        KindComboBox = new JComboBox();
+	        KindComboBox.setModel(new DefaultComboBoxModel(new String[] {"Ration", "Outing", "Food", "School", "Others"}));
+	        KindComboBox.setBounds(226, 371, 210, 27);
+	        DorCPanel.add(KindComboBox);
+	        
+	        JComboBox DorCComboBox = new JComboBox();
+	        DorCComboBox.setModel(new DefaultComboBoxModel(new String[] {"Deposit", "Withdraw"}));
+	        DorCComboBox.setBounds(226, 131, 210, 27);
+	        DorCPanel.add(DorCComboBox);
+	        
+	        JButton btnDorC = new JButton("Enter");
+	        btnDorC.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		String Date = new String (DateTxtField.getText());
+	        		String TempAmount = new String (AmountTxtField.getText());
+	        		int Amount = Integer.valueOf(TempAmount);
+	        		String Remarks = new String (RemarksTxtField.getText());
+	        		String Kind = (String) KindComboBox.getSelectedItem();
+	        		String DorCSelected = (String) DorCComboBox.getSelectedItem();
+	        		
+	        		DateTxtField.setText("");
+	        		AmountTxtField.setText("");
+	        		RemarksTxtField.setText("");
+	        		
+	        		if (DorCSelected == "Deposit" ) {
+	        			AccMetd.InsertCredit(Date,Amount,Remarks,Kind);
+	        			lblDorCConfirmation.setText("Amount Deposited Successfully.");
+	        			
+	        		}
+	        		else if (DorCSelected == "Withdraw" ) {
+	        			AccMetd.InsertDebit(Date,Amount,Remarks,Kind);
+	        			lblDorCConfirmation.setText("Amount Withdrawn Successfully.");
+	        		}
+	        	}
+	        });
+	        btnDorC.setBounds(505, 264, 117, 29);
+	        DorCPanel.add(btnDorC);
+	        
+	        lblDorCConfirmation = new JLabel(" ");
+	        lblDorCConfirmation.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblDorCConfirmation.setBounds(438, 328, 210, 16);
+	        DorCPanel.add(lblDorCConfirmation);
+	        
+	        JPanel OthersMainPanel = new JPanel(); // Index is 1.
+	        OthersMainPanel.setBackground(UIManager.getColor("Button.background"));
+	        TabbedPane.addTab("New tab", null, OthersMainPanel, null);
+	        OthersMainPanel.setLayout(null);
+	        
+	        Panel = new JPanel();
+	        Panel.setBounds(117, 258, 418, 168);
+	        OthersMainPanel.add(Panel);
+	        Panel.setLayout(null);
+	        
+	        JComboBox OthersComboBox = new JComboBox();
+	        OthersComboBox.setModel(new DefaultComboBoxModel(new String[] {"Bank Balance", "Last Transaction", "Average Spend", "Total Credit", "Total Debit"}));
+	        OthersComboBox.setBounds(66, 44, 261, 27);
+	        Panel.add(OthersComboBox);
+	        
+	        JLabel lblP_1 = new JLabel("Others");
+	        lblP_1.setBounds(164, 16, 61, 16);
+	        Panel.add(lblP_1);
+	        
+	        btnMPOthers = new JButton("Enter");
+	        btnMPOthers.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		 String SelectedItem = (String) OthersComboBox.getSelectedItem(); 
+	        		 AccMetd.OthersItemDisplay(SelectedItem); 
+	        	
+	        	}
+	        });
+	        btnMPOthers.setFocusable(false);
+	        btnMPOthers.setBounds(136, 83, 117, 29);
+	        Panel.add(btnMPOthers);
+	        
+
+	        lblOutput_1 = new JLabel(" ");
+	        lblOutput_1.setBounds(6, 81, 642, 48);
+	        OthersMainPanel.add(lblOutput_1);
+	        lblOutput_1.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
+	        lblOutput_1.setHorizontalAlignment(SwingConstants.CENTER);
 	        
 	        ControlPanel = new JPanel();
 	        ControlPanel.setBackground(UIManager.getColor("Button.background"));
 	        ControlPanel.setForeground(new Color(50, 81, 255));
-	        ControlPanel.setBounds(0, 32, 154, 458);
+	        ControlPanel.setBounds(0, 6, 94, 484);
 	        TestMenuPanel.add(ControlPanel);
 	        ControlPanel.setLayout(null);
 	        ControlPanel.setVisible(true);
 	        
-	        BtnTBP1 = new JButton("Tab 1");
+	        BtnTBP1 = new JButton("D/W");
+	        BtnTBP1.setBounds(20, 78, 70, 29);
+	        ImageIcon DWicon = new ImageIcon("/Users/mac/Downloads/DW.PNG"); 
+	        Image DWorgimage = DWicon.getImage();
+	        Image DWrezImage = DWorgimage.getScaledInstance(BtnTBP1.getWidth() , BtnTBP1.getHeight(), Image.SCALE_SMOOTH);
+	        ImageIcon DWResizedImage = new ImageIcon(DWrezImage);
+	        BtnTBP1.setIcon(DWResizedImage);
 	        BtnTBP1.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-//	        		System.out.println("Tab 1 Opened");
 	        		TabbedPane.setSelectedIndex(0);
 	        	}
 	        });
-	        BtnTBP1.setBounds(18, 37, 117, 29);
+	        
 	        ControlPanel.add(BtnTBP1);
 	        
-	        JButton BtnTBP2 = new JButton("Tab 2");
+	        JButton BtnTBP2 = new JButton("Others");
 	        BtnTBP2.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-//	        		System.out.println("Tab 2 Opened");
 	        		TabbedPane.setSelectedIndex(1);
 	        	}
 	        });
-	        BtnTBP2.setBounds(18, 78, 117, 29);
+	        BtnTBP2.setBounds(18, 120, 70, 29);
 	        ControlPanel.add(BtnTBP2);
+	        
+	        JButton btnNewButton_3 = new JButton("New button");
+	        btnNewButton_3.setBounds(20, 160, 70, 29);
+	        ControlPanel.add(btnNewButton_3);
+	        
+	        JButton btnNewButton_4 = new JButton("New button");
+	        btnNewButton_4.setBounds(20, 201, 70, 29);
+	        ControlPanel.add(btnNewButton_4);
+	        
+	        JButton btnNewButton_5 = new JButton("New button");
+	        btnNewButton_5.setBounds(20, 242, 70, 29);
+	        ControlPanel.add(btnNewButton_5);
+	        
+	        JButton btnNewButton_6 = new JButton("New button");
+	        btnNewButton_6.setBounds(20, 283, 70, 29);
+	        ControlPanel.add(btnNewButton_6);
+	        
+	        JButton DashboardBtn = new JButton();
+	        DashboardBtn.setBounds(20, 38, 70, 29);
+	        ImageIcon icon = new ImageIcon("/Users/mac/Downloads/dashboard.PNG"); 
+	        Image orgimage = icon.getImage();
+	        Image rezImage = orgimage.getScaledInstance(DashboardBtn.getWidth() , DashboardBtn.getHeight(), Image.SCALE_SMOOTH);
+	        ImageIcon ResizedImage = new ImageIcon(rezImage);
+	        DashboardBtn.setIcon(ResizedImage);
+	        
+	        ControlPanel.add(DashboardBtn);
 	    }
 	    
 	    private void Menu() {
 	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 	    	cardLayout.show(contentPane, "MenuPanel");
 	    } // Menu.
-	    
-	    private void Back(String x, String y) { 	// Goes to the Previous Page.
-	    	CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-	    	cardLayout.show(contentPane, "MenuPanel");
-	    } // Back.
 }
